@@ -3,201 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIFT NEXUS | LIVE GLOBAL</title>
+    <title>SWIFT NEXUS | THE NEXT GEN</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap');
-        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #020617; --card: rgba(15, 23, 42, 0.8); }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;500;700&display=swap');
+
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #010409;
+            --card-bg: rgba(13, 17, 23, 0.9);
+            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.5);
+        }
+
+        /* --- النجوم المتحركة (الخلفية) --- */
+        #star-canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: radial-gradient(circle at center, #0b1121 0%, #010409 100%); }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; cursor: none; }
         body { background-color: var(--bg); color: white; overflow-x: hidden; }
 
-        #cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; mix-blend-mode: difference; }
-        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; }
+        /* --- Custom Cursor --- */
+        #cursor { position: fixed; width: 25px; height: 25px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; transition: transform 0.1s ease; }
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: white; border-radius: 50%; pointer-events: none; z-index: 99999; }
 
-        header { padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 5000; background: rgba(2,6,23,0.8); border-bottom: 1px solid rgba(0,242,255,0.1); }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--primary); text-decoration: none; }
+        /* --- انيميشن البداية (The Cinematic Intro) --- */
+        #intro-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 100000;
+            display: flex; justify-content: center; align-items: center; transition: 1.5s ease-out;
+        }
+        .intro-text {
+            font-family: 'Orbitron'; font-size: 6rem; font-weight: 900; color: var(--primary);
+            letter-spacing: 20px; text-shadow: var(--neon-glow);
+            animation: swiftIntro 3s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        @keyframes swiftIntro {
+            0% { letter-spacing: -20px; opacity: 0; filter: blur(20px); transform: scale(0.5); }
+            50% { opacity: 1; filter: blur(0); }
+            100% { letter-spacing: 25px; opacity: 0; transform: scale(1.2); }
+        }
 
-        section { display: none; padding: 140px 8% 100px; flex-direction: column; align-items: center; min-height: 100vh; }
-        .active { display: flex; }
+        /* --- الهيدر المتطور --- */
+        header {
+            padding: 25px 8%; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; width: 100%; top: 0; z-index: 5000;
+            background: rgba(1, 4, 9, 0.7); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+            animation: slideDown 1s ease 3s forwards; opacity: 0;
+        }
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .review-section { width: 100%; max-width: 1000px; margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(0,242,255,0.1); }
-        .review-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-        
-        #slowmode-timer { display: none; color: #f87171; font-family: 'Orbitron'; font-size: 14px; padding: 10px; border: 1px dashed #f87171; margin-bottom: 10px; text-align: center; }
-        
-        .star { font-size: 25px; cursor: pointer; color: #1e293b; }
+        /* --- الأقسام والأنيميشن --- */
+        section { display: none; padding: 150px 8% 50px; flex-direction: column; align-items: center; min-height: 100vh; }
+        .active { display: flex; animation: sectionFade 0.8s ease forwards; }
+        @keyframes sectionFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- الكروت والمنتجات --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; }
+        .product-card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+            padding: 40px; border-radius: 20px; transition: 0.5s; position: relative; overflow: hidden;
+        }
+        .product-card:hover { border-color: var(--primary); transform: translateY(-10px) scale(1.02); box-shadow: var(--neon-glow); }
+        .product-card::before { content: 'ELITE'; position: absolute; top: 10px; right: -30px; background: var(--secondary); padding: 5px 40px; transform: rotate(45deg); font-size: 10px; font-weight: bold; }
+
+        /* --- صفحة تفاصيل المنتج --- */
+        #product-detail { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 6000; padding: 100px 8%; overflow-y: auto; }
+        .detail-content { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 30px; border: 1px solid var(--primary); }
+
+        /* --- التقييم --- */
+        .star { font-size: 30px; color: #1e293b; transition: 0.3s; }
         .star.active { color: #fbbf24; text-shadow: 0 0 10px #fbbf24; }
+        .btn-elite {
+            padding: 15px 35px; background: none; border: 1px solid var(--primary); color: var(--primary);
+            font-family: 'Orbitron'; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.4s; position: relative; z-index: 1;
+        }
+        .btn-elite:hover:not(:disabled) { color: black; background: var(--primary); box-shadow: var(--neon-glow); }
+        .btn-elite:disabled { opacity: 0.4; }
 
-        .btn-elite { padding: 12px 25px; background: none; border: 1px solid var(--primary); color: var(--primary); font-family: 'Orbitron'; font-weight: 700; transition: 0.4s; text-decoration: none; display: inline-block; }
-        .btn-elite:hover:not(:disabled) { background: var(--primary); color: black; box-shadow: 0 0 20px var(--primary); }
-        .btn-elite:disabled { opacity: 0.3; cursor: not-allowed; }
+        /* --- الدعم الفني --- */
+        #support-panel {
+            position: fixed; bottom: 30px; right: 30px; z-index: 4000;
+            background: var(--secondary); width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--secondary);
+            animation: pulse 2s infinite; animation-delay: 4s; opacity: 0; transition: 0.5s;
+        }
 
-        .reviews-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 30px; }
-        .review-card { background: rgba(0,242,255,0.03); padding: 15px; border-radius: 10px; border-left: 3px solid var(--primary); animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #slowmode-box { display: none; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-family: 'Orbitron'; }
 
-        #rights-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 30000; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(112, 0, 255, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(112, 0, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(112, 0, 255, 0); } }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
     <div id="cursor-dot"></div>
+    <canvas id="star-canvas"></canvas>
 
-    <div id="rights-modal">
-        <div style="background:var(--card); padding:40px; border:1px solid var(--primary); text-align:center; max-width:500px;">
-            <h2 style="font-family:'Orbitron'; color:var(--primary);">LEGAL NOTICE</h2>
-            <p style="margin:20px 0; color:#94a3b8;">You are about to download Xeno Elite. Redistribution is prohibited.</p>
-            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" onclick="closeModal()">I AGREE</a>
+    <div id="intro-overlay">
+        <div class="intro-text">SWIFT</div>
+    </div>
+
+    <header id="main-header">
+        <a href="#" onclick="showSection('home')" class="logo" style="font-family:'Orbitron'; font-weight:900; color:var(--primary); text-decoration:none;">SWIFT <span style="color:white">NEXUS</span></a>
+        <nav style="display:flex; gap:30px;">
+            <a href="#" onclick="showSection('home')" style="color:white; text-decoration:none; font-size:13px; font-weight:700;">HOME</a>
+            <a href="#" onclick="openSupport()" style="color:var(--secondary); text-decoration:none; font-size:13px; font-weight:700;">SUPPORT [OFFLINE]</a>
+        </nav>
+    </header>
+
+    <div id="support-panel" onclick="openSupport()" style="animation: pulse 2s infinite; opacity:1">
+        <span style="font-size:24px;">💬</span>
+    </div>
+
+    <div id="product-detail">
+        <button onclick="closeProduct()" style="background:none; border:none; color:white; font-size:2rem; margin-bottom:20px;">← BACK</button>
+        <div class="detail-content">
+            <h1 id="detTitle" style="font-family:'Orbitron'; color:var(--primary);">XENO PRO ELITE</h1>
+            <p id="detDesc" style="color:#94a3b8; margin:20px 0; line-height:1.8;"></p>
+            
+            <div id="review-area" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:30px; margin-top:30px;">
+                <h3 style="margin-bottom:20px;">SECURE FEEDBACK</h3>
+                <div id="slowmode-box">COOLDOWN ACTIVE: <span id="timer">02:50</span></div>
+                
+                <input type="text" id="revName" placeholder="Agent Identity" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; border-radius:10px; margin-bottom:10px;">
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                </div>
+                <textarea id="revText" placeholder="Tactical report..." rows="3" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; border-radius:10px; margin-bottom:15px;"></textarea>
+                <button id="postBtn" onclick="submitReview()" class="btn-elite" style="width:100%;">BROADCAST DATA</button>
+                
+                <div id="reviewsList" style="margin-top:40px; display:grid; gap:15px;"></div>
+            </div>
         </div>
     </div>
 
-    <header>
-        <a href="#" onclick="showSection('home')" class="logo">SWIFT <span style="color: white;">NEXUS</span></a>
-        <nav><a href="#" onclick="showSection('home')" style="color:white; text-decoration:none;">HOME</a></nav>
-    </header>
-
     <section id="home" class="active">
-        <h1 style="font-family:'Orbitron'; font-size:4rem;">GLOBAL ACCESS</h1>
-        <button onclick="showSection('login')" class="btn-elite" style="margin-top:30px;">LOGIN SYSTEM</button>
-    </section>
-
-    <section id="login">
-        <div style="text-align:center; max-width:400px; width:100%;">
-            <input type="text" id="user" class="review-input" placeholder="AGENT NAME">
-            <input type="password" id="pass" class="review-input" placeholder="SECURITY KEY">
-            <button onclick="validate()" class="btn-elite" style="width:100%;">VALIDATE</button>
-        </div>
-    </section>
-
-    <section id="welcome">
-        <h1 style="font-family:'Orbitron'; color:var(--primary);">SYNCING DATA...</h1>
-        <div style="width:100%; height:2px; background:#1e293b; margin-top:20px;"><div id="bar" style="width:0%; height:100%; background:var(--primary); transition:4s linear;"></div></div>
-    </section>
-
-    <section id="tools">
-        <div style="width:100%; max-width:1000px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="font-family:'Orbitron'; color:var(--primary);">THE ARSENAL</h2>
-            <button onclick="openRights()" class="btn-elite">DOWNLOAD XENO</button>
-        </div>
-
-        <div class="review-section">
-            <h2 style="font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 20px;">LIVE GLOBAL REVIEWS</h2>
-            
-            <div id="review-form">
-                <div id="slowmode-timer">SLOWMODE: <span id="timer-count">02:50</span></div>
-                <input type="text" id="revName" class="review-input" placeholder="Display Name">
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
-                </div>
-                <textarea id="revText" class="review-input" rows="2" placeholder="Write feedback..."></textarea>
-                <button id="postBtn" onclick="submitReview()" class="btn-elite" style="width:100%;">BROADCAST REVIEW</button>
+        <h1 style="font-family:'Orbitron'; font-size:6rem; text-align:center; animation: glow 2s infinite alternate;">THE <span style="color:var(--primary)">VAULT</span></h1>
+        <p style="color:#475569; letter-spacing:10px; margin-bottom:50px;">ELITE SOFTWARE HUB</p>
+        <div class="grid">
+            <div class="product-card" onclick="openProduct('XENO PRO ELITE', 'The ultimate memory execution engine. Stealth bypass, fast execution, and zero-detection layer.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">XENO PRO</h2>
+                <p style="color:#64748b; margin:10px 0;">Advanced Execution v2.1</p>
+                <div style="color:#fbbf24; font-size:12px;">★★★★★ (1,204 Reviews)</div>
+                <div style="margin-top:20px; color:var(--primary); font-size:12px; font-weight:bold;">CLICK TO ACCESS →</div>
             </div>
-
-            <div class="reviews-container" id="reviewsList">
-                </div>
+            <div class="product-card" onclick="openProduct('GHOST BYPASS', 'The invisible layer. Works in the background to mask your activities from anti-cheats.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">GHOST</h2>
+                <p style="color:#64748b; margin:10px 0;">Stealth Module</p>
+                <div style="color:#fbbf24; font-size:12px;">★★★★☆ (850 Reviews)</div>
+                <div style="margin-top:20px; color:var(--primary); font-size:12px; font-weight:bold;">CLICK TO ACCESS →</div>
+            </div>
         </div>
     </section>
 
     <script>
-        // الماوس
+        // --- تأثير النجوم الخلفية ---
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function initStars() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            for(let i=0; i<150; i++) stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5 });
+        }
+        function drawStars() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
+                s.y -= s.speed; if(s.y < 0) s.y = canvas.height;
+            });
+            requestAnimationFrame(drawStars);
+        }
+        initStars(); drawStars();
+
+        // --- Custom Cursor ---
         const cursor = document.getElementById('cursor');
         const dot = document.getElementById('cursor-dot');
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        let selectedStars = 0;
-        let canPost = true;
-        // هنا نستخدم نفس الـ Webhook حقك عشان نخزن التعليقات "عالمياً"
-        const webhookURL = "https://discord.com/api/webhooks/1491096636250788073/q8E_c3bjD2qxXfnGzDeEcsBzIhuqSzK6Fx9vXpgo3O4Y8_9Fu0d38REi-z3rhVx0hxGn";
+        // --- التبديل بين الأقسام ---
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
 
-        document.querySelectorAll('.star').forEach(star => {
-            star.onclick = function() {
-                selectedStars = this.dataset.value;
-                document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', s.dataset.value <= selectedStars));
+        // --- نظام فتح المنتج وتقييمه ---
+        let currentProduct = "";
+        function openProduct(name, desc) {
+            currentProduct = name;
+            document.getElementById('detTitle').innerText = name;
+            document.getElementById('detDesc').innerText = desc;
+            document.getElementById('product-detail').style.display = 'block';
+            loadReviews();
+        }
+        function closeProduct() { document.getElementById('product-detail').style.display = 'none'; }
+
+        // --- نظام التقييم والـ Slowmode ---
+        let starsSelected = 0;
+        let canPost = true;
+        document.querySelectorAll('.star').forEach(s => {
+            s.onclick = function() {
+                starsSelected = this.dataset.value;
+                document.querySelectorAll('.star').forEach(st => st.classList.toggle('active', st.dataset.value <= starsSelected));
             }
         });
 
-        async function submitReview() {
+        function submitReview() {
             if(!canPost) return;
             const name = document.getElementById('revName').value;
             const text = document.getElementById('revText').value;
-            if(!name || !text || selectedStars === 0) return alert("Complete all data!");
+            if(!name || !text || starsSelected == 0) return alert("Fill all tactical data!");
 
-            const reviewData = { name, text, stars: selectedStars };
-
-            // 1. حفظ محلي (عشان تظهر لك فوراً)
-            saveLocally(reviewData);
-
-            // 2. إرسال عالمي (عشان خويك يشوفها)
-            await fetch(webhookURL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: "SWIFT REVIEW SYSTEM",
-                    content: `**NEW REVIEW FROM: ${name}**\nRating: ${'★'.repeat(selectedStars)}\nComment: ${text}`
-                })
-            });
-
-            startSlowmode();
+            const rev = { name, text, stars: starsSelected, product: currentProduct };
+            let all = JSON.parse(localStorage.getItem('swift_global_reviews') || '[]');
+            all.unshift(rev);
+            localStorage.setItem('swift_global_reviews', JSON.stringify(all));
+            
             loadReviews();
-        }
-
-        function saveLocally(data) {
-            let reviews = JSON.parse(localStorage.getItem('global_vault') || '[]');
-            reviews.unshift(data);
-            localStorage.setItem('global_vault', JSON.stringify(reviews.slice(0, 10)));
+            startSlowmode();
         }
 
         function loadReviews() {
             const container = document.getElementById('reviewsList');
-            const reviews = JSON.parse(localStorage.getItem('global_vault') || '[]');
+            const all = JSON.parse(localStorage.getItem('swift_global_reviews') || '[]');
+            const filtered = all.filter(r => r.product === currentProduct);
             
-            // تعليقات افتراضية إذا كانت القائمة فارغة
-            const defaults = [{name: "Viper_KSA", text: "Xeno is working perfectly!", stars: 5}];
-            const list = reviews.length > 0 ? reviews : defaults;
-
-            container.innerHTML = list.map(r => `
-                <div class="review-card">
-                    <div style="color: #fbbf24; font-size:12px;">${'★'.repeat(r.stars)}</div>
-                    <div style="font-weight: 700; color: var(--primary); font-size:14px;">${r.name}</div>
-                    <div style="font-size: 12px; color: #94a3b8; margin-top:5px;">${r.text}</div>
+            container.innerHTML = filtered.map(r => `
+                <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; border-left:3px solid var(--primary);">
+                    <div style="color:#fbbf24; font-size:12px;">${'★'.repeat(r.stars)}</div>
+                    <div style="font-weight:700; color:var(--primary);">${r.name}</div>
+                    <div style="font-size:13px; color:#94a3b8; margin-top:5px;">${r.text}</div>
                 </div>
-            `).join('');
+            `).join('') || "<p style='color:#475569'>No reviews for this asset yet.</p>";
         }
 
         function startSlowmode() {
             canPost = false;
             const btn = document.getElementById('postBtn');
-            const timerBox = document.getElementById('slowmode-timer');
-            const timerCount = document.getElementById('timer-count');
-            btn.disabled = true;
-            timerBox.style.display = 'block';
-            let total = 170; 
-            const cd = setInterval(() => {
-                let m = Math.floor(total/60), s = total%60;
-                timerCount.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-                if(total <= 0) { clearInterval(cd); canPost = true; btn.disabled = false; timerBox.style.display='none'; }
-                total--;
+            const box = document.getElementById('slowmode-box');
+            const timer = document.getElementById('timer');
+            btn.disabled = true; box.style.display = 'block';
+            let sec = 170;
+            const interval = setInterval(() => {
+                let m = Math.floor(sec/60), s = sec%60;
+                timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                if(sec <= 0) { clearInterval(interval); canPost = true; btn.disabled = false; box.style.display = 'none'; }
+                sec--;
             }, 1000);
         }
 
-        function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(id === 'tools') loadReviews();
-        }
+        function openSupport() { window.open('https://discord.gg/enXgaXxnEs', '_blank'); }
 
-        function validate() {
-            showSection('welcome');
-            document.getElementById('bar').style.width = '100%';
-            setTimeout(() => showSection('tools'), 4500);
-        }
-
-        function openRights() { document.getElementById('rights-modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('rights-modal').style.display = 'none'; }
-        window.onload = () => { loadReviews(); };
+        // --- انيميشن الدخول ---
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('intro-overlay').style.opacity = '0';
+                setTimeout(() => document.getElementById('intro-overlay').style.display = 'none', 1500);
+            }, 3000);
+        };
     </script>
 </body>
 </html>
