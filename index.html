@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIFT NEXUS | THE NEXT GEN</title>
+    <title>SWIFT NEXUS | ULTRA ELITE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;500;700&display=swap');
 
@@ -15,17 +15,16 @@
             --neon-glow: 0 0 15px rgba(0, 242, 255, 0.5);
         }
 
-        /* --- النجوم المتحركة (الخلفية) --- */
         #star-canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: radial-gradient(circle at center, #0b1121 0%, #010409 100%); }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; cursor: none; }
         body { background-color: var(--bg); color: white; overflow-x: hidden; }
 
-        /* --- Custom Cursor --- */
+        /* Custom Cursor */
         #cursor { position: fixed; width: 25px; height: 25px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; transition: transform 0.1s ease; }
         #cursor-dot { position: fixed; width: 5px; height: 5px; background: white; border-radius: 50%; pointer-events: none; z-index: 99999; }
 
-        /* --- انيميشن البداية (The Cinematic Intro) --- */
+        /* Intro Overlay */
         #intro-overlay {
             position: fixed; inset: 0; background: #000; z-index: 100000;
             display: flex; justify-content: center; align-items: center; transition: 1.5s ease-out;
@@ -41,56 +40,60 @@
             100% { letter-spacing: 25px; opacity: 0; transform: scale(1.2); }
         }
 
-        /* --- الهيدر المتطور --- */
+        /* Header */
         header {
             padding: 25px 8%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; width: 100%; top: 0; z-index: 5000;
             background: rgba(1, 4, 9, 0.7); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 242, 255, 0.1);
-            animation: slideDown 1s ease 3s forwards; opacity: 0;
+            display: none; /* يظهر بعد اللوجن */
         }
-        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* --- الأقسام والأنيميشن --- */
+        /* Sections */
         section { display: none; padding: 150px 8% 50px; flex-direction: column; align-items: center; min-height: 100vh; }
         .active { display: flex; animation: sectionFade 0.8s ease forwards; }
         @keyframes sectionFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- الكروت والمنتجات --- */
+        /* Login Card */
+        .login-card {
+            background: var(--card-bg); border: 1px solid var(--primary);
+            padding: 50px; border-radius: 20px; width: 100%; max-width: 400px;
+            box-shadow: var(--neon-glow); text-align: center;
+        }
+        .review-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        .review-input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary); }
+
+        /* Grid and Cards */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; }
         .product-card {
             background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
             padding: 40px; border-radius: 20px; transition: 0.5s; position: relative; overflow: hidden;
         }
-        .product-card:hover { border-color: var(--primary); transform: translateY(-10px) scale(1.02); box-shadow: var(--neon-glow); }
-        .product-card::before { content: 'ELITE'; position: absolute; top: 10px; right: -30px; background: var(--secondary); padding: 5px 40px; transform: rotate(45deg); font-size: 10px; font-weight: bold; }
+        .product-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: var(--neon-glow); }
 
-        /* --- صفحة تفاصيل المنتج --- */
-        #product-detail { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 6000; padding: 100px 8%; overflow-y: auto; }
-        .detail-content { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 30px; border: 1px solid var(--primary); }
-
-        /* --- التقييم --- */
-        .star { font-size: 30px; color: #1e293b; transition: 0.3s; }
-        .star.active { color: #fbbf24; text-shadow: 0 0 10px #fbbf24; }
+        /* Buttons */
         .btn-elite {
             padding: 15px 35px; background: none; border: 1px solid var(--primary); color: var(--primary);
             font-family: 'Orbitron'; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.4s; position: relative; z-index: 1;
+            letter-spacing: 2px; transition: 0.4s; position: relative; width: 100%;
         }
         .btn-elite:hover:not(:disabled) { color: black; background: var(--primary); box-shadow: var(--neon-glow); }
-        .btn-elite:disabled { opacity: 0.4; }
 
-        /* --- الدعم الفني --- */
+        /* Product Detail Modal */
+        #product-detail { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 6000; padding: 100px 8%; overflow-y: auto; }
+        .detail-content { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 30px; border: 1px solid var(--primary); }
+
         #support-panel {
             position: fixed; bottom: 30px; right: 30px; z-index: 4000;
             background: var(--secondary); width: 60px; height: 60px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--secondary);
-            animation: pulse 2s infinite; animation-delay: 4s; opacity: 0; transition: 0.5s;
+            display: none; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--secondary);
+            animation: pulse 2s infinite;
         }
-
-        #slowmode-box { display: none; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-family: 'Orbitron'; }
-
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(112, 0, 255, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(112, 0, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(112, 0, 255, 0); } }
+        
+        #slowmode-box { display: none; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-family: 'Orbitron'; }
+        .star { font-size: 30px; color: #1e293b; transition: 0.3s; }
+        .star.active { color: #fbbf24; text-shadow: 0 0 10px #fbbf24; }
     </style>
 </head>
 <body>
@@ -106,58 +109,70 @@
     <header id="main-header">
         <a href="#" onclick="showSection('home')" class="logo" style="font-family:'Orbitron'; font-weight:900; color:var(--primary); text-decoration:none;">SWIFT <span style="color:white">NEXUS</span></a>
         <nav style="display:flex; gap:30px;">
-            <a href="#" onclick="showSection('home')" style="color:white; text-decoration:none; font-size:13px; font-weight:700;">HOME</a>
-            <a href="#" onclick="openSupport()" style="color:var(--secondary); text-decoration:none; font-size:13px; font-weight:700;">SUPPORT [OFFLINE]</a>
+            <a href="#" onclick="showSection('home')" style="color:white; text-decoration:none; font-size:13px; font-weight:700;">THE VAULT</a>
+            <a href="#" onclick="window.open('https://discord.gg/enXgaXxnEs', '_blank')" style="color:var(--secondary); text-decoration:none; font-size:13px; font-weight:700;">SUPPORT</a>
         </nav>
     </header>
 
-    <div id="support-panel" onclick="openSupport()" style="animation: pulse 2s infinite; opacity:1">
-        <span style="font-size:24px;">💬</span>
-    </div>
+    <section id="login" class="active">
+        <div class="login-card">
+            <h1 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:30px;">AUTHORIZATION</h1>
+            <input type="text" id="user" class="review-input" placeholder="AGENT NAME">
+            <input type="password" id="pass" class="review-input" placeholder="ACCESS KEY">
+            <button onclick="validate()" class="btn-elite">INITIALIZE ACCESS</button>
+            <p style="color:#475569; font-size:10px; margin-top:20px;">SECURE CONNECTION ESTABLISHED</p>
+        </div>
+    </section>
+
+    <section id="home">
+        <h1 style="font-family:'Orbitron'; font-size:4rem; text-align:center;">THE <span style="color:var(--primary)">VAULT</span></h1>
+        <p style="color:#475569; letter-spacing:10px; margin-bottom:50px;">ELITE ASSETS ACCESS</p>
+        <div class="grid">
+            <div class="product-card" onclick="openProduct('XENO PRO ELITE', 'Premium memory manipulation engine. High speed execution with zero-trace technology.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">XENO PRO</h2>
+                <p style="color:#64748b; margin:10px 0;">Execution Engine v2.1</p>
+                <div style="color:#fbbf24; font-size:12px;">★★★★★ (1,402)</div>
+                <div style="margin-top:20px; color:var(--primary); font-size:11px; font-weight:bold;">ENTER ASSET →</div>
+            </div>
+            <div class="product-card" onclick="openProduct('GHOST BYPASS', 'The invisible kernel-level layer. Undetected by most modern anti-cheat systems.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">GHOST</h2>
+                <p style="color:#64748b; margin:10px 0;">Stealth Bypass</p>
+                <div style="color:#fbbf24; font-size:12px;">★★★★☆ (920)</div>
+                <div style="margin-top:20px; color:var(--primary); font-size:11px; font-weight:bold;">ENTER ASSET →</div>
+            </div>
+        </div>
+    </section>
 
     <div id="product-detail">
-        <button onclick="closeProduct()" style="background:none; border:none; color:white; font-size:2rem; margin-bottom:20px;">← BACK</button>
+        <button onclick="closeProduct()" style="background:none; border:none; color:white; font-size:1.5rem; margin-bottom:20px; font-family:'Orbitron';">← EXIT ASSET</button>
         <div class="detail-content">
-            <h1 id="detTitle" style="font-family:'Orbitron'; color:var(--primary);">XENO PRO ELITE</h1>
+            <h1 id="detTitle" style="font-family:'Orbitron'; color:var(--primary);"></h1>
             <p id="detDesc" style="color:#94a3b8; margin:20px 0; line-height:1.8;"></p>
             
-            <div id="review-area" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:30px; margin-top:30px;">
-                <h3 style="margin-bottom:20px;">SECURE FEEDBACK</h3>
-                <div id="slowmode-box">COOLDOWN ACTIVE: <span id="timer">02:50</span></div>
+            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" style="text-align:center; display:block; margin-bottom:40px;">DOWNLOAD FILE</a>
+
+            <div id="review-area" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:30px;">
+                <h3 style="font-family:'Orbitron'; font-size:1rem; margin-bottom:20px;">PRODUCT FEEDBACK</h3>
+                <div id="slowmode-box">COOLDOWN: <span id="timer">02:50</span></div>
                 
-                <input type="text" id="revName" placeholder="Agent Identity" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; border-radius:10px; margin-bottom:10px;">
+                <input type="text" id="revName" placeholder="Your Name" class="review-input">
                 <div style="display:flex; gap:10px; margin-bottom:15px;">
                     <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
                 </div>
-                <textarea id="revText" placeholder="Tactical report..." rows="3" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; border-radius:10px; margin-bottom:15px;"></textarea>
-                <button id="postBtn" onclick="submitReview()" class="btn-elite" style="width:100%;">BROADCAST DATA</button>
+                <textarea id="revText" placeholder="Tactical report..." rows="3" class="review-input"></textarea>
+                <button id="postBtn" onclick="submitReview()" class="btn-elite">POST REVIEW</button>
                 
                 <div id="reviewsList" style="margin-top:40px; display:grid; gap:15px;"></div>
             </div>
         </div>
     </div>
 
-    <section id="home" class="active">
-        <h1 style="font-family:'Orbitron'; font-size:6rem; text-align:center; animation: glow 2s infinite alternate;">THE <span style="color:var(--primary)">VAULT</span></h1>
-        <p style="color:#475569; letter-spacing:10px; margin-bottom:50px;">ELITE SOFTWARE HUB</p>
-        <div class="grid">
-            <div class="product-card" onclick="openProduct('XENO PRO ELITE', 'The ultimate memory execution engine. Stealth bypass, fast execution, and zero-detection layer.')">
-                <h2 style="font-family:'Orbitron'; color:var(--primary);">XENO PRO</h2>
-                <p style="color:#64748b; margin:10px 0;">Advanced Execution v2.1</p>
-                <div style="color:#fbbf24; font-size:12px;">★★★★★ (1,204 Reviews)</div>
-                <div style="margin-top:20px; color:var(--primary); font-size:12px; font-weight:bold;">CLICK TO ACCESS →</div>
-            </div>
-            <div class="product-card" onclick="openProduct('GHOST BYPASS', 'The invisible layer. Works in the background to mask your activities from anti-cheats.')">
-                <h2 style="font-family:'Orbitron'; color:var(--primary);">GHOST</h2>
-                <p style="color:#64748b; margin:10px 0;">Stealth Module</p>
-                <div style="color:#fbbf24; font-size:12px;">★★★★☆ (850 Reviews)</div>
-                <div style="margin-top:20px; color:var(--primary); font-size:12px; font-weight:bold;">CLICK TO ACCESS →</div>
-            </div>
-        </div>
-    </section>
+    <div id="support-panel" onclick="window.open('https://discord.gg/enXgaXxnEs', '_blank')">
+        <span style="font-size:24px;">💬</span>
+    </div>
 
     <script>
-        // --- تأثير النجوم الخلفية ---
+        // Stars Animation
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -176,7 +191,7 @@
         }
         initStars(); drawStars();
 
-        // --- Custom Cursor ---
+        // Cursor
         const cursor = document.getElementById('cursor');
         const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', e => {
@@ -184,13 +199,26 @@
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        // --- التبديل بين الأقسام ---
+        // Login Logic
+        function validate() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u.length < 3) return alert("Agent Name too short!");
+            
+            document.getElementById('login').classList.remove('active');
+            // إظهار الهيدر وزر الدعم
+            document.getElementById('main-header').style.display = 'flex';
+            document.getElementById('support-panel').style.display = 'flex';
+            
+            showSection('home');
+        }
+
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        // --- نظام فتح المنتج وتقييمه ---
+        // Product Details
         let currentProduct = "";
         function openProduct(name, desc) {
             currentProduct = name;
@@ -201,7 +229,7 @@
         }
         function closeProduct() { document.getElementById('product-detail').style.display = 'none'; }
 
-        // --- نظام التقييم والـ Slowmode ---
+        // Review System
         let starsSelected = 0;
         let canPost = true;
         document.querySelectorAll('.star').forEach(s => {
@@ -215,7 +243,7 @@
             if(!canPost) return;
             const name = document.getElementById('revName').value;
             const text = document.getElementById('revText').value;
-            if(!name || !text || starsSelected == 0) return alert("Fill all tactical data!");
+            if(!name || !text || starsSelected == 0) return alert("Fill data!");
 
             const rev = { name, text, stars: starsSelected, product: currentProduct };
             let all = JSON.parse(localStorage.getItem('swift_global_reviews') || '[]');
@@ -230,14 +258,13 @@
             const container = document.getElementById('reviewsList');
             const all = JSON.parse(localStorage.getItem('swift_global_reviews') || '[]');
             const filtered = all.filter(r => r.product === currentProduct);
-            
             container.innerHTML = filtered.map(r => `
-                <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; border-left:3px solid var(--primary);">
-                    <div style="color:#fbbf24; font-size:12px;">${'★'.repeat(r.stars)}</div>
-                    <div style="font-weight:700; color:var(--primary);">${r.name}</div>
-                    <div style="font-size:13px; color:#94a3b8; margin-top:5px;">${r.text}</div>
+                <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:10px; border-left:3px solid var(--primary);">
+                    <div style="color:#fbbf24; font-size:10px;">${'★'.repeat(r.stars)}</div>
+                    <div style="font-weight:700; color:var(--primary); font-size:13px;">${r.name}</div>
+                    <div style="font-size:12px; color:#94a3b8;">${r.text}</div>
                 </div>
-            `).join('') || "<p style='color:#475569'>No reviews for this asset yet.</p>";
+            `).join('') || "<p style='color:#475569; font-size:12px;'>No reports yet.</p>";
         }
 
         function startSlowmode() {
@@ -255,9 +282,6 @@
             }, 1000);
         }
 
-        function openSupport() { window.open('https://discord.gg/enXgaXxnEs', '_blank'); }
-
-        // --- انيميشن الدخول ---
         window.onload = () => {
             setTimeout(() => {
                 document.getElementById('intro-overlay').style.opacity = '0';
