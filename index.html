@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg); color: white; overflow-x: hidden; height: 100vh; }
 
-        /* --- شاشة الترحيب الاحترافية --- */
+        /* --- شاشة الترحيب INITIALIZING --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -63,6 +63,60 @@
         }
 
         .hide-splash { opacity: 0 !important; pointer-events: none; }
+        /* ---------------------------------- */
+
+        /* --- أنيميشن WELCOME SWIFT الأسطوري (جديد) --- */
+        .glitch-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .glitch-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            color: #fff;
+            letter-spacing: 5px;
+            text-shadow: 0 0 15px var(--primary);
+            animation: neonPulse 1.5s infinite alternate;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: "WELCOME SWIFT";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch-text::before {
+            color: #ff00c1;
+            z-index: -1;
+            animation: glitchEffect 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        .glitch-text::after {
+            color: #00fff9;
+            z-index: -2;
+            animation: glitchEffect 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+            100% { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary), 0 0 60px #fff; }
+        }
         /* ---------------------------------- */
 
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #111827 0%, #030712 100%); }
@@ -160,9 +214,11 @@
     </section>
 
     <section id="welcome">
-        <div style="max-width: 500px;">
-            <h2 style="font-size: 3rem;">WELCOME, <span id="agent" style="color: var(--primary);">SWIFT</span></h2>
-            <p style="color: #94a3b8; margin-top: 10px;">SECURING SESSION & LOCKING DEVICE...</p>
+        <div style="max-width: 700px; width: 100%;">
+            <div class="glitch-wrapper">
+                <div class="glitch-text">WELCOME SWIFT</div>
+            </div>
+            <p style="color: #94a3b8; margin-top: 10px; letter-spacing: 2px;">ESTABLISHING SECURE CONNECTION...</p>
             <div class="loader-wrap"><div id="bar" class="loader-fill"></div></div>
         </div>
     </section>
@@ -251,11 +307,10 @@
         }
 
         function loginSuccess(u) {
-            // تم تغيير السطر بالأسفل ليظهر اسم SWIFT بدلاً من اسم المستخدم
-            document.getElementById('agent').innerText = "SWIFT";
+            // حذفنا سطر تعديل InnerText القديم لأنه لم يعد مطلوباً
             show('welcome');
             document.getElementById('bar').style.width = "100%";
-            setTimeout(() => show('tools'), 3500); // وقت التحميل قبل الدخول للأدوات
+            setTimeout(() => show('tools'), 4000); // زدنا الوقت قليلاً ليستمتع بالأنيميشن
         }
 
         function showError(m) {
