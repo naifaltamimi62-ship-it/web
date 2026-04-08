@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIFT NEXUS | THE FINAL EVOLUTION</title>
+    <title>SWIFT NEXUS | ELITE HUB</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;500;700&display=swap');
 
@@ -15,93 +15,62 @@
             --neon-glow: 0 0 20px rgba(0, 242, 255, 0.6);
         }
 
-        /* --- خلفية النجوم المتطورة --- */
         #star-canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: #000; }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; cursor: none; }
-        body { background-color: var(--bg); color: white; overflow: hidden; }
+        body { background-color: var(--bg); color: white; overflow-x: hidden; }
 
         /* Custom Cursor */
         #cursor { position: fixed; width: 25px; height: 25px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; transition: transform 0.1s; }
         #cursor-dot { position: fixed; width: 5px; height: 5px; background: white; border-radius: 50%; pointer-events: none; z-index: 99999; }
 
-        /* Intro Screen */
-        #intro-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 100000;
-            display: flex; justify-content: center; align-items: center; transition: 1s;
+        /* الانتقال السريع (SWIFT Transition) */
+        #transition-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: none; justify-content: center; align-items: center;
         }
-        .intro-text {
-            font-family: 'Orbitron'; font-size: 5rem; font-weight: 900; color: var(--primary);
-            letter-spacing: 15px; text-shadow: var(--neon-glow);
-            animation: swiftIntro 3s ease-in-out forwards;
-        }
-        @keyframes swiftIntro {
-            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
-            50% { opacity: 1; filter: blur(0); }
-            100% { transform: scale(1.1); opacity: 0; }
-        }
+        .trans-text { font-family: 'Orbitron'; font-size: 4rem; color: var(--primary); text-shadow: var(--neon-glow); letter-spacing: 10px; animation: pulse 0.5s infinite; }
 
-        /* Header الاحترافي */
+        /* Header */
         header {
             padding: 20px 8%; display: none; justify-content: space-between; align-items: center;
             position: fixed; width: 100%; top: 0; z-index: 5000;
-            background: rgba(1, 4, 9, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-            animation: fadeIn 1s forwards;
+            background: rgba(1, 4, 9, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 242, 255, 0.2);
         }
 
         /* Sections */
-        section { display: none; padding: 140px 8% 50px; flex-direction: column; align-items: center; height: 100vh; overflow-y: auto; }
-        .active { display: flex; animation: zoomIn 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        section { display: none; padding: 120px 8% 50px; flex-direction: column; min-height: 100vh; }
+        .active { display: flex; animation: sectionIn 0.6s ease-out forwards; }
+        @keyframes sectionIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Login Card */
-        .login-card {
-            background: var(--card-bg); border: 1px solid var(--primary);
-            padding: 50px; border-radius: 5px; width: 100%; max-width: 450px;
-            box-shadow: var(--neon-glow); text-align: center; position: relative;
-        }
+        /* Home Content Grid */
+        .home-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .info-panel { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; margin-bottom: 20px; transition: 0.3s; }
+        .info-panel:hover { border-color: var(--primary); box-shadow: var(--neon-glow); }
 
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; width: 100%; max-width: 1200px; margin-top: 40px; }
-        .product-card {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(0,242,255,0.1);
-            padding: 40px; border-radius: 15px; transition: 0.4s; position: relative; overflow: hidden;
-        }
-        .product-card:hover { 
-            background: rgba(0,242,255,0.05); border-color: var(--primary); 
-            transform: translateY(-10px); box-shadow: var(--neon-glow);
-        }
+        /* Profile Card */
+        .profile-card { background: linear-gradient(135deg, var(--secondary), #000); padding: 30px; border-radius: 20px; border: 1px solid var(--primary); text-align: center; }
+        .avatar { width: 80px; height: 80px; background: var(--primary); border-radius: 50%; margin: 0 auto 15px; box-shadow: var(--neon-glow); }
 
-        /* Buttons */
-        .btn-elite {
-            padding: 15px 35px; background: none; border: 1px solid var(--primary); color: var(--primary);
-            font-family: 'Orbitron'; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.3s; width: 100%; position: relative;
-        }
+        /* Developers List */
+        .dev-tag { display: flex; align-items: center; gap: 10px; margin-top: 15px; background: rgba(0,242,255,0.1); padding: 10px; border-radius: 8px; border-left: 3px solid var(--primary); }
+
+        /* Grid for Products */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; }
+        .product-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,242,255,0.1); padding: 30px; border-radius: 15px; transition: 0.4s; }
+        .product-card:hover { border-color: var(--primary); transform: scale(1.02); }
+
+        /* Buttons & Stars */
+        .btn-elite { padding: 12px 25px; background: none; border: 1px solid var(--primary); color: var(--primary); font-family: 'Orbitron'; font-weight: 700; transition: 0.3s; width: 100%; }
         .btn-elite:hover { background: var(--primary); color: black; box-shadow: var(--neon-glow); }
-
-        /* Product Modal */
-        #product-detail { 
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
-            z-index: 9000; padding: 80px 8%; overflow-y: auto; backdrop-filter: blur(10px);
-        }
-        .detail-content { max-width: 900px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--primary); padding: 50px; border-radius: 20px; }
-
-        /* Inputs */
-        .review-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; outline: none; }
-
-        #support-panel {
-            position: fixed; bottom: 30px; right: 30px; z-index: 5000;
-            background: var(--secondary); width: 65px; height: 65px; border-radius: 50%;
-            display: none; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--secondary);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        
         .star { font-size: 25px; color: #1e293b; transition: 0.3s; }
         .star.active { color: #fbbf24; text-shadow: 0 0 10px #fbbf24; }
-        #slowmode-box { display: none; color: #ff4d4d; margin-bottom: 15px; font-family: 'Orbitron'; border: 1px dashed #ff4d4d; padding: 10px; text-align: center; }
+
+        /* Modal Product */
+        #product-detail { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9000; padding: 80px 8%; overflow-y: auto; backdrop-filter: blur(10px); }
+        .detail-content { max-width: 800px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--primary); padding: 40px; border-radius: 20px; }
+
+        #support-panel { position: fixed; bottom: 30px; right: 30px; z-index: 5000; background: var(--secondary); width: 60px; height: 60px; border-radius: 50%; display: none; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--secondary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     </style>
 </head>
 <body>
@@ -110,69 +79,89 @@
     <div id="cursor-dot"></div>
     <canvas id="star-canvas"></canvas>
 
-    <div id="intro-overlay"><div class="intro-text">SWIFT</div></div>
+    <div id="transition-overlay"><div class="trans-text">SWIFT</div></div>
 
     <header id="main-header">
-        <a href="#" onclick="showSection('home')" class="logo" style="font-family:'Orbitron'; font-weight:900; color:var(--primary); text-decoration:none; font-size: 24px;">SWIFT <span style="color:white">NEXUS</span></a>
-        <nav style="display:flex; gap:30px;">
-            <a href="#" onclick="showSection('home')" style="color:white; text-decoration:none; font-size:12px; font-weight:700; letter-spacing:2px;">HOME</a>
-            <a href="#" onclick="window.open('https://discord.gg/enXgaXxnEs', '_blank')" style="color:var(--primary); text-decoration:none; font-size:12px; font-weight:700; letter-spacing:2px;">SUPPORT</a>
+        <a href="#" onclick="swiftNav('home')" class="logo" style="font-family:'Orbitron'; color:var(--primary); text-decoration:none; font-size:22px;">SWIFT <span style="color:white">NEXUS</span></a>
+        <nav style="display:flex; gap:25px;">
+            <a href="#" onclick="swiftNav('home')" style="color:white; text-decoration:none; font-size:12px; font-weight:700;">HOME</a>
+            <a href="#" onclick="swiftNav('vault')" style="color:white; text-decoration:none; font-size:12px; font-weight:700;">VAULT</a>
+            <a href="#" onclick="window.open('https://discord.gg/enXgaXxnEs', '_blank')" style="color:var(--primary); text-decoration:none; font-size:12px; font-weight:700;">SUPPORT</a>
         </nav>
     </header>
 
-    <section id="login" class="active">
-        <div class="login-card">
-            <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:10px;">SYSTEM ACCESS</h2>
-            <p style="color:#475569; font-size:10px; margin-bottom:30px;">IDENTITY VERIFICATION REQUIRED</p>
-            <input type="text" id="user" class="review-input" placeholder="USERNAME">
-            <input type="password" id="pass" class="review-input" placeholder="ACCESS TOKEN">
-            <button onclick="validate()" class="btn-elite">LOGIN TO VAULT</button>
+    <section id="login" class="active" style="align-items:center; justify-content:center;">
+        <div style="background:var(--card-bg); border:1px solid var(--primary); padding:50px; border-radius:10px; text-align:center; max-width:400px; width:100%;">
+            <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:20px;">AUTHORIZATION</h2>
+            <input type="text" id="user" placeholder="AGENT NAME" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; margin-bottom:15px; border-radius:5px;">
+            <input type="password" id="pass" placeholder="ACCESS TOKEN" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:15px; color:white; margin-bottom:15px; border-radius:5px;">
+            <button onclick="validate()" class="btn-elite">LOGIN</button>
         </div>
     </section>
 
     <section id="home">
-        <h1 style="font-family:'Orbitron'; font-size:5rem; text-shadow: var(--neon-glow); margin-bottom: 10px;">THE <span style="color:var(--primary)">VAULT</span></h1>
-        <p style="color:#475569; letter-spacing:15px; margin-bottom:40px;">GLOBAL ELITE ASSETS</p>
-        
-        <div class="grid">
-            <div class="product-card" onclick="openProduct('XENO PRO', 'Advanced memory manipulation and script execution. Zero-trace stealth mode enabled.')">
-                <div style="color:var(--primary); font-family:'Orbitron'; margin-bottom:15px;">ASSET #001</div>
-                <h2 style="font-family:'Orbitron'; font-size:1.8rem;">XENO PRO</h2>
-                <p style="color:#94a3b8; font-size:14px; margin:15px 0;">Elite Executive v3.0</p>
-                <div style="color:#fbbf24;">★★★★★ <span style="color:#475569; font-size:10px;">(2,100+)</span></div>
-                <div style="margin-top:25px; color:var(--primary); font-family:'Orbitron'; font-size:10px;">INITIALIZE ASSET →</div>
+        <div class="home-grid">
+            <div class="left-col">
+                <div class="info-panel">
+                    <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:15px;">LATEST INTEL [NEWS]</h2>
+                    <p style="font-size:14px; color:#94a3b8;">• Xeno Engine v3.1 update deployed successfully.</p>
+                    <p style="font-size:14px; color:#94a3b8; margin-top:10px;">• New Stealth module "Ghost Layer" is now undetected.</p>
+                    <p style="font-size:14px; color:#94a3b8; margin-top:10px;">• Global Database synchronization complete.</p>
+                </div>
+                <div class="info-panel">
+                    <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:15px;">CORE DEVELOPERS</h2>
+                    <div class="dev-tag"><span>👑</span> <div><strong>Viper</strong> <br><small style="color:var(--primary)">Lead Software Architect</small></div></div>
+                    <div class="dev-tag"><span>🛠️</span> <div><strong>Ghost_Dev</strong> <br><small style="color:var(--primary)">Kernel Specialist</small></div></div>
+                </div>
             </div>
-            
-            <div class="product-card" onclick="openProduct('GHOST LAYER', 'Kernel-level stealth bypass for maximum security. Undetectable by current AC systems.')">
-                <div style="color:var(--primary); font-family:'Orbitron'; margin-bottom:15px;">ASSET #002</div>
-                <h2 style="font-family:'Orbitron'; font-size:1.8rem;">GHOST LAYER</h2>
-                <p style="color:#94a3b8; font-size:14px; margin:15px 0;">Stealth Bypass System</p>
-                <div style="color:#fbbf24;">★★★★☆ <span style="color:#475569; font-size:10px;">(1,450+)</span></div>
-                <div style="margin-top:25px; color:var(--primary); font-family:'Orbitron'; font-size:10px;">INITIALIZE ASSET →</div>
+            <div class="right-col">
+                <div class="profile-card">
+                    <div class="avatar"></div>
+                    <h3 id="profileName" style="font-family:'Orbitron';">AGENT</h3>
+                    <p style="font-size:11px; color:var(--primary); margin-top:5px;">STATUS: ACTIVE</p>
+                    <hr style="margin:20px 0; border:0; border-top:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size:12px; text-align:left;">
+                        <p>LVL: 99 Elite</p>
+                        <p>REPUTATION: +1,500</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vault">
+        <h1 style="font-family:'Orbitron'; font-size:3rem; margin-bottom:30px;">SECURE <span style="color:var(--primary)">VAULT</span></h1>
+        <div class="grid">
+            <div class="product-card" onclick="openProduct('XENO PRO', 'The most powerful memory executor on the market. Advanced encryption and fast execution.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">XENO PRO</h2>
+                <p style="color:#475569; margin:10px 0;">Asset #001</p>
+                <button class="btn-elite" style="font-size:10px;">ENTER ASSET</button>
+            </div>
+            <div class="product-card" onclick="openProduct('GHOST LAYER', 'Stealth module that bypasses anti-cheat systems at kernel level.')">
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">GHOST LAYER</h2>
+                <p style="color:#475569; margin:10px 0;">Asset #002</p>
+                <button class="btn-elite" style="font-size:10px;">ENTER ASSET</button>
             </div>
         </div>
     </section>
 
     <div id="product-detail">
         <div class="detail-content">
-            <button onclick="closeProduct()" style="background:none; border:none; color:var(--primary); font-family:'Orbitron'; margin-bottom:30px; cursor:none;">[ BACK_TO_VAULT ]</button>
-            <h1 id="detTitle" style="font-family:'Orbitron'; color:var(--primary); font-size:3rem; margin-bottom:20px;"></h1>
-            <p id="detDesc" style="color:#94a3b8; line-height:1.8; margin-bottom:30px;"></p>
+            <button onclick="closeProduct()" style="background:none; border:none; color:var(--primary); font-family:'Orbitron'; margin-bottom:20px; cursor:none;">[ EXIT_VAULT ]</button>
+            <h1 id="detTitle" style="font-family:'Orbitron'; color:var(--primary);"></h1>
+            <p id="detDesc" style="color:#94a3b8; margin:20px 0;"></p>
+            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" style="text-align:center; display:block; text-decoration:none; margin-bottom:30px;">DOWNLOAD</a>
             
-            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" style="text-align:center; display:block; margin-bottom:50px; text-decoration:none;">DOWNLOAD ASSET</a>
-
-            <div style="border-top:1px solid rgba(0,242,255,0.1); padding-top:40px;">
-                <h3 style="font-family:'Orbitron'; margin-bottom:20px;">TACTICAL FEEDBACK</h3>
-                <div id="slowmode-box">COOLDOWN ACTIVE: <span id="timer">02:50</span></div>
-                
-                <input type="text" id="revName" placeholder="Agent Name" class="review-input">
-                <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:30px;">
+                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px;">PRODUCT REVIEWS</h3>
+                <div id="slowmode-box" style="display:none; color:#ff4d4d; border:1px dashed #ff4d4d; padding:10px; margin-bottom:10px; text-align:center;">COOLDOWN: <span id="timer">02:50</span></div>
+                <input type="text" id="revName" placeholder="Your Name" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:12px; color:white; border-radius:5px; margin-bottom:10px;">
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
                     <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
                 </div>
-                <textarea id="revText" placeholder="Write feedback..." rows="3" class="review-input"></textarea>
-                <button id="postBtn" onclick="submitReview()" class="btn-elite">SUBMIT TO GLOBAL</button>
-                
-                <div id="reviewsList" style="margin-top:40px; display:grid; gap:20px;"></div>
+                <textarea id="revText" placeholder="Feedback..." rows="2" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e293b; padding:12px; color:white; border-radius:5px; margin-bottom:10px;"></textarea>
+                <button id="postBtn" onclick="submitReview()" class="btn-elite">POST DATA</button>
+                <div id="reviewsList" style="margin-top:30px; display:grid; gap:15px;"></div>
             </div>
         </div>
     </div>
@@ -186,14 +175,11 @@
         let stars = [];
         function initStars() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<150; i++) stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.8 });
+            for(let i=0; i<150; i++) stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5 });
         }
         function drawStars() {
             ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white";
-            stars.forEach(s => {
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
-                s.y -= s.speed; if(s.y < 0) s.y = canvas.height;
-            });
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y -= s.speed; if(s.y < 0) s.y = canvas.height; });
             requestAnimationFrame(drawStars);
         }
         initStars(); drawStars();
@@ -201,20 +187,16 @@
         // Cursor
         const cursor = document.getElementById('cursor');
         const dot = document.getElementById('cursor-dot');
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-            dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
-        });
+        document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; });
 
-        // Navigation & Login
-        function validate() {
-            const u = document.getElementById('user').value;
-            if(u.length < 2) return alert("Identify yourself, Agent.");
-            
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('main-header').style.display = 'flex';
-            document.getElementById('support-panel').style.display = 'flex';
-            showSection('home');
+        // SWIFT Navigation
+        function swiftNav(target) {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                showSection(target);
+                overlay.style.display = 'none';
+            }, 800);
         }
 
         function showSection(id) {
@@ -222,70 +204,45 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Product Engine
-        let currentProd = "";
-        function openProduct(name, desc) {
-            currentProd = name;
-            document.getElementById('detTitle').innerText = name;
-            document.getElementById('detDesc').innerText = desc;
-            document.getElementById('product-detail').style.display = 'block';
-            loadReviews();
+        function validate() {
+            const name = document.getElementById('user').value;
+            if(name.length < 2) return alert("Identify yourself!");
+            document.getElementById('profileName').innerText = name.toUpperCase();
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('main-header').style.display = 'flex';
+            document.getElementById('support-panel').style.display = 'flex';
+            swiftNav('home');
         }
+
+        // Product & Reviews
+        let curP = "";
+        function openProduct(n, d) { curP = n; document.getElementById('detTitle').innerText = n; document.getElementById('detDesc').innerText = d; document.getElementById('product-detail').style.display = 'block'; loadReviews(); }
         function closeProduct() { document.getElementById('product-detail').style.display = 'none'; }
 
-        // Review Logic
-        let selectedStars = 0;
-        let canPost = true;
-        document.querySelectorAll('.star').forEach(s => {
-            s.onclick = function() {
-                selectedStars = this.dataset.value;
-                document.querySelectorAll('.star').forEach(st => st.classList.toggle('active', st.dataset.value <= selectedStars));
-            }
-        });
+        let selS = 0; let canP = true;
+        document.querySelectorAll('.star').forEach(s => { s.onclick = function() { selS = this.dataset.value; document.querySelectorAll('.star').forEach(st => st.classList.toggle('active', st.dataset.value <= selS)); } });
 
         function submitReview() {
-            if(!canPost) return;
-            const name = document.getElementById('revName').value;
-            const text = document.getElementById('revText').value;
-            if(!name || !text || selectedStars === 0) return alert("Fill data!");
-
-            const rev = { name, text, stars: selectedStars, product: currentProd };
-            let all = JSON.parse(localStorage.getItem('swift_revs_v2') || '[]');
-            all.unshift(rev);
-            localStorage.setItem('swift_revs_v2', JSON.stringify(all));
-            loadReviews();
-            startSlowmode();
+            if(!canP) return;
+            const n = document.getElementById('revName').value, t = document.getElementById('revText').value;
+            if(!n || !t || selS == 0) return alert("Fill data!");
+            let all = JSON.parse(localStorage.getItem('swift_global_v3') || '[]');
+            all.unshift({ name: n, text: t, stars: selS, product: curP });
+            localStorage.setItem('swift_global_v3', JSON.stringify(all));
+            loadReviews(); startSlowmode();
         }
 
         function loadReviews() {
             const container = document.getElementById('reviewsList');
-            const all = JSON.parse(localStorage.getItem('swift_revs_v2') || '[]');
-            const filtered = all.filter(r => r.product === currentProd);
-            container.innerHTML = filtered.map(r => `
-                <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:10px; border-left:4px solid var(--primary);">
-                    <div style="color:#fbbf24; font-size:12px; margin-bottom:5px;">${'★'.repeat(r.stars)}</div>
-                    <div style="font-weight:700; color:var(--primary); font-size:14px;">${r.name}</div>
-                    <div style="color:#94a3b8; font-size:13px;">${r.text}</div>
-                </div>
-            `).join('') || "<p style='color:#475569'>No tactical feedback recorded.</p>";
+            const filtered = JSON.parse(localStorage.getItem('swift_global_v3') || '[]').filter(r => r.product === curP);
+            container.innerHTML = filtered.map(r => `<div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:10px; border-left:3px solid var(--primary);"><div style="color:#fbbf24; font-size:10px;">${'★'.repeat(r.stars)}</div><div style="font-weight:700; color:var(--primary); font-size:13px;">${r.name}</div><div style="font-size:12px; color:#94a3b8;">${r.text}</div></div>`).join('') || "<p style='color:#475569'>No data.</p>";
         }
 
         function startSlowmode() {
-            canPost = false;
-            const btn = document.getElementById('postBtn');
-            const box = document.getElementById('slowmode-box');
-            const timer = document.getElementById('timer');
-            btn.disabled = true; box.style.display = 'block';
-            let sec = 170;
-            const interval = setInterval(() => {
-                let m = Math.floor(sec/60), s = sec%60;
-                timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
-                if(sec <= 0) { clearInterval(interval); canPost = true; btn.disabled = false; box.style.display = 'none'; }
-                sec--;
-            }, 1000);
+            canP = false; const btn = document.getElementById('postBtn'), box = document.getElementById('slowmode-box'), timer = document.getElementById('timer');
+            btn.disabled = true; box.style.display = 'block'; let sec = 170;
+            const inv = setInterval(() => { let m = Math.floor(sec/60), s = sec%60; timer.innerText = `${m}:${s < 10 ? '0'+s : s}`; if(sec <= 0) { clearInterval(inv); canP = true; btn.disabled = false; box.style.display = 'none'; } sec--; }, 1000);
         }
-
-        window.onload = () => { setTimeout(() => { document.getElementById('intro-overlay').style.display='none'; }, 3000); };
     </script>
 </body>
 </html>
