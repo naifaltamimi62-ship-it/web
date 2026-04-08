@@ -3,73 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID SWIFT | ULTIMATE STORE</title>
-    
+    <title>SWIFT SAUDI | OFFICIAL STORE</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         :root { --pink: #d42a8b; --purple: #7b2cbf; --bg: #0f051d; --panel: #1a0b2e; }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; cursor: auto !important; }
         body { background: var(--bg); color: white; overflow-x: hidden; scroll-behavior: smooth; }
-        
-        /* تأثير النجوم */
         #canvas { position: fixed; inset: 0; z-index: -1; }
-
+        
         /* الهيدر */
-        header { 
-            position: fixed; top: 0; width: 100%; padding: 15px 8%; 
-            display: none; justify-content: space-between; align-items: center; 
-            background: rgba(15, 5, 29, 0.95); backdrop-filter: blur(10px); 
-            z-index: 1000; border-bottom: 2px solid var(--pink); 
-        }
+        header { position: fixed; top: 0; width: 100%; padding: 15px 8%; display: none; justify-content: space-between; align-items: center; background: rgba(15, 5, 29, 0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 2px solid var(--pink); }
+        .logo { font-size: 24px; font-weight: 900; color: var(--pink); text-shadow: 0 0 10px var(--pink); }
 
+        /* الأقسام */
         section { display: none; padding: 120px 8% 50px; min-height: 100vh; flex-direction: column; align-items: center; }
-        .active { display: flex; animation: fadeIn 0.5s ease; }
+        .active { display: flex; animation: fadeIn 0.4s ease; }
 
-        /* كرت المنتج الاحترافي */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; max-width: 1100px; }
-        .void-card { 
-            background: linear-gradient(145deg, var(--panel), #25123d); 
-            border: 1px solid rgba(212, 42, 139, 0.3); padding: 25px; 
-            border-radius: 25px; text-align: center; position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5); transition: 0.4s;
-        }
-        .void-card:hover { transform: translateY(-10px); border-color: var(--pink); box-shadow: 0 0 30px rgba(212, 42, 139, 0.2); }
-        .price-tag { background: var(--pink); padding: 5px 15px; border-radius: 50px; font-weight: 900; position: absolute; top: -15px; left: 20px; }
+        /* الكروت */
+        .void-card { background: linear-gradient(145deg, var(--panel), #25123d); border: 1px solid rgba(212, 42, 139, 0.3); padding: 25px; border-radius: 20px; text-align: center; width: 100%; max-width: 380px; transition: 0.3s; }
+        .void-card:hover { transform: translateY(-5px); border-color: var(--pink); }
+        .btn-void { background: linear-gradient(90deg, var(--pink), var(--purple)); color: white; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; width: 100%; cursor: pointer !important; }
+        
+        /* التقييمات */
+        .reviews-container { background: rgba(0,0,0,0.4); border-radius: 15px; padding: 15px; margin: 20px 0; max-height: 250px; overflow-y: auto; border: 1px solid #333; }
+        .rev-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; margin-bottom: 10px; border-right: 4px solid var(--pink); text-align: right; }
 
-        /* الأزرار */
-        .btn-void { 
-            background: linear-gradient(90deg, var(--pink), var(--purple)); 
-            color: white; border: none; padding: 12px 25px; border-radius: 12px; 
-            font-weight: 900; width: 100%; cursor: pointer !important; transition: 0.3s;
-        }
-        .btn-void:disabled { background: #444; cursor: not-allowed !important; opacity: 0.5; }
-
-        /* المودالات */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .modal-box { 
-            background: var(--panel); border: 2px solid var(--pink); padding: 30px; 
-            border-radius: 20px; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; 
-        }
-
-        /* نظام التقييمات */
-        .reviews-box { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 15px; margin: 20px 0; max-height: 200px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.05); }
-        .review-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; margin-bottom: 10px; border-right: 4px solid var(--pink); text-align: right; }
-
-        /* الأسئلة الشائعة */
-        .faq-item { width: 100%; max-width: 800px; background: var(--panel); margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(212, 42, 139, 0.2); }
-        .faq-q { padding: 15px; cursor: pointer !important; font-weight: bold; display: flex; justify-content: space-between; }
-        .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s; color: #bbb; }
+        /* الصفحات الداخلية (السياسات) */
+        .content-page { width: 100%; max-width: 900px; text-align: right; line-height: 1.8; }
+        .content-page h2 { color: var(--pink); margin-bottom: 20px; font-size: 2rem; }
+        .faq-box { background: var(--panel); border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid #333; }
 
         /* الفوتر */
         footer { background: #07020d; padding: 60px 8%; display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; border-top: 1px solid var(--pink); }
-        .footer-col h3 { color: var(--pink); margin-bottom: 20px; }
-        .footer-col a { color: #ccc; text-decoration: none; display: block; margin-bottom: 10px; font-size: 14px; }
+        footer a { color: #ccc; text-decoration: none; display: block; margin-bottom: 10px; font-size: 14px; }
+        footer a:hover { color: var(--pink); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -77,110 +48,112 @@
 <canvas id="canvas"></canvas>
 
 <header id="header">
-    <div style="font-size:24px; font-weight:900; color:var(--pink);">VOID <span style="color:white">SWIFT</span></div>
-    <div style="display:flex; gap:20px;">
-        <a href="#home" style="color:white; text-decoration:none; font-weight:bold;">الرئيسية</a>
-        <a href="#footer" style="color:white; text-decoration:none; font-weight:bold;">الدعم</a>
-    </div>
+    <div class="logo" onclick="nav('home')">VOID SWIFT</div>
+    <nav style="display:flex; gap:20px;">
+        <button onclick="nav('home')" style="background:none; border:none; color:white; font-weight:bold;">الرئيسية</button>
+        <button onclick="nav('faq')" style="background:none; border:none; color:white; font-weight:bold;">الأسئلة</button>
+    </nav>
 </header>
 
 <section id="login" class="active" style="justify-content:center;">
-    <div class="void-card" style="max-width:400px;">
-        <img src="https://i.ibb.co/vYx33z9/void-logo.png" alt="Logo" style="width:100px; margin-bottom:20px;">
-        <h1>دخول الأعضاء</h1>
-        <p style="color:grey; font-size:12px; margin-bottom:20px;">مرحباً بك في أسرع متجر لتسليم المنتجات الرقمية</p>
-        <input type="text" id="username" placeholder="اسمك المستعار" style="width:100%; padding:15px; background:#0f051d; border:1px solid var(--pink); color:white; border-radius:10px; margin-bottom:15px; text-align:right;">
-        <button onclick="startStore()" class="btn-void">دخول لايف</button>
+    <div class="void-card">
+        <h1 style="margin-bottom:20px;">دخول نظام SWIFT</h1>
+        <input type="text" id="username" placeholder="اسمك المستعار" style="width:100%; padding:15px; background:#0f051d; border:1px solid var(--pink); color:white; border-radius:10px; margin-bottom:20px; text-align:right;">
+        <button onclick="startApp()" class="btn-void">دخول آمن</button>
     </div>
 </section>
 
 <section id="home">
-    <h1 style="font-size:2.5rem; margin-bottom:10px;">متجر <span style="color:var(--pink)">VOID</span> الرقمي</h1>
-    <p style="color:grey; margin-bottom:50px;">حصريات، أمان، وسرعة في التنفيذ</p>
-
-    <div class="product-grid">
-        <div class="void-card">
-            <div class="price-tag">0.00 ر.س</div>
-            <img src="https://i.ibb.co/X7W7F7P/xeno.png" alt="Xeno" style="width:100%; border-radius:15px; margin-bottom:15px;">
-            <h3>XENO EXECUTOR V3</h3>
-            <p style="color:#888; font-size:13px; margin:10px 0;">أداة التشفير الأقوى مع نظام Bypass متطور.</p>
-            <button onclick="openProduct('Xeno Executor')" class="btn-void">تفاصيل المنتج والتقييمات</button>
-        </div>
-    </div>
-
-    <div style="width:100%; max-width:800px; margin-top:80px;">
-        <h2 style="text-align:center; margin-bottom:30px; color:var(--pink);">الأسئلة الشائعة (FAQ)</h2>
-        <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">كيف استلم السكريبت؟ <span>+</span></div>
-            <div class="faq-a"><p style="padding:15px;">بمجرد الضغط على تحميل والموافقة على الشروط، سيتم توجيهك فوراً لرابط ميديا فاير.</p></div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">هل الأداة آمنة؟ <span>+</span></div>
-            <div class="faq-a"><p style="padding:15px;">نعم، أداة Xeno مشفرة بالكامل لضمان عدم كشفها من قبل أنظمة الحماية.</p></div>
-        </div>
+    <h1 style="font-size:2.5rem; margin-bottom:40px;">متجرنا <span style="color:var(--pink)">الرسمي</span></h1>
+    <div class="void-card">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300" style="width:100%; border-radius:15px; margin-bottom:15px;">
+        <h2>XENO EXECUTOR</h2>
+        <p style="color:#888; margin:15px 0;">الأداء الأفضل، الحماية الأقوى، والسرعة القصوى.</p>
+        <button onclick="openProduct('Xeno Executor')" class="btn-void">التفاصيل والتقييمات</button>
     </div>
 </section>
 
-<div id="productModal" class="modal">
-    <div class="modal-box">
-        <h2 id="pName" style="color:var(--pink);"></h2>
-        <p style="margin:15px 0; color:#ccc; line-height:1.6;">هذا المنتج مخصص لمستخدمي VOID فقط. يوفر استقرار 100% ودعم لجميع النسخ الحديثة. يتم التحديث تلقائياً عند وجود إصدار جديد.</p>
-        
-        <button onclick="openDownloadTerms()" class="btn-void" style="margin-bottom:20px;">الانتقال لصفحة التحميل</button>
-
-        <h3>التقييمات (Live ⭐)</h3>
-        <div id="reviewsList" class="reviews-box">جاري التحميل...</div>
-        <input type="text" id="revText" placeholder="اكتب تقييمك هنا.." style="width:100%; padding:10px; background:#0f051d; border:1px solid #333; color:white; border-radius:8px; margin-bottom:10px; text-align:right;">
-        <button onclick="postReview()" class="btn-void" style="padding:8px;">نشر التقييم</button>
-        
-        <button onclick="closeModal('productModal')" style="width:100%; background:none; border:none; color:grey; margin-top:15px; cursor:pointer;">إغلاق</button>
-    </div>
-</div>
-
-<div id="termsModal" class="modal">
-    <div class="modal-box">
-        <h2 style="color:var(--pink);">شروط التحميل</h2>
-        <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; margin:15px 0; font-size:13px; text-align:right;">
-            <p>1. يمنع بيع السكريبت أو توزيعه بدون إذن.</p>
-            <p>2. المتجر غير مسؤول عن سوء استخدام الأداة.</p>
-            <p>3. تأكد من إغلاق جدار الحماية قبل التشغيل لضمان العمل.</p>
+<section id="faq">
+    <div class="content-page">
+        <h2>الأسئلة الشائعة</h2>
+        <div class="faq-box">
+            <h4>كيف يتم تفعيل السكريبت؟</h4>
+            <p>بعد التحميل، اتبع التعليمات المرفقة في ملف الـ Readme المرفق مع Xeno.</p>
         </div>
-        <label style="display:flex; align-items:center; gap:10px; margin-bottom:20px; cursor:pointer;">
-            <input type="checkbox" id="acceptTerms" onchange="document.getElementById('finalLink').disabled = !this.checked">
-            <span>أوافق على جميع الشروط المذكورة أعلاه</span>
-        </label>
-        <button id="finalLink" disabled onclick="window.open('https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file')" class="btn-void">تحميل الآن (MediaFire)</button>
-        <button onclick="closeModal('termsModal')" style="width:100%; background:none; border:none; color:grey; margin-top:10px;">إلغاء</button>
+        <div class="faq-box">
+            <h4>هل يتطلب دفع شهري؟</h4>
+            <p>لا، النسخة الحالية مجانية تماماً وحصرية لعملاء سويفت.</p>
+        </div>
+        <button onclick="nav('home')" class="btn-void" style="width:auto;">العودة للرئيسية</button>
+    </div>
+</section>
+
+<section id="return-policy">
+    <div class="content-page">
+        <h2>سياسة الاستبدال والاسترجاع</h2>
+        <div class="faq-box">
+            <p>1. المنتجات الرقمية لا ترد ولا تستبدل بعد التحميل إلا في حال وجود عطل تقني مثبت من طرفنا.</p>
+            <p>2. الدعم الفني متوفر لحل أي مشكلة تواجهك قبل طلب الاستبدال.</p>
+            <p>3. في حال تعطل السكريبت بسبب تحديث اللعبة، يتم الانتظار حتى صدور التحديث الجديد من قبلنا.</p>
+        </div>
+        <button onclick="nav('home')" class="btn-void" style="width:auto;">العودة للرئيسية</button>
+    </div>
+</section>
+
+<section id="privacy-policy">
+    <div class="content-page">
+        <h2>سياسة الخصوصية</h2>
+        <div class="faq-box">
+            <p>نحن نحترم خصوصيتك بالكامل. البيانات التي يتم جمعها (الاسم المستعار والتقييم) تُستخدم فقط لتحسين تجربة المستخدم داخل المتجر.</p>
+            <p>لا يتم جمع أي بيانات حساسة أو ملفات تعريف ارتباط خاصة بجهازك.</p>
+        </div>
+        <button onclick="nav('home')" class="btn-void" style="width:auto;">العودة للرئيسية</button>
+    </div>
+</section>
+
+<div id="productModal" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; display:none; justify-content:center; align-items:center; padding:20px;">
+    <div class="void-card" style="max-width:600px; text-align:right;">
+        <h2 id="pName" style="color:var(--pink);"></h2>
+        <p style="margin:15px 0; color:#ccc;">أنت على وشك تحميل الأداة الأكثر طلباً. يرجى كتابة تقييمك لمساعدة الآخرين.</p>
+        
+        <div class="reviews-container" id="reviewsList">جاري جلب الآراء...</div>
+        
+        <input type="text" id="revText" placeholder="رأيك في الأداة.." style="width:100%; padding:10px; background:#0f051d; border:1px solid #333; color:white; border-radius:10px; margin-bottom:10px; text-align:right;">
+        <button onclick="pushReview()" class="btn-void" style="padding:8px; margin-bottom:20px;">نشر التقييم</button>
+        
+        <div style="border-top:1px solid #333; padding-top:20px;">
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-bottom:15px;">
+                <input type="checkbox" id="checkTerms" onchange="document.getElementById('dlBtn').disabled = !this.checked">
+                <span>أوافق على شروط الاستخدام والتحميل</span>
+            </label>
+            <button id="dlBtn" disabled onclick="window.open('https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file')" class="btn-void">تحميل من ميديا فاير</button>
+        </div>
+        <button onclick="document.getElementById('productModal').style.display='none'" style="background:none; border:none; color:grey; margin-top:15px; width:100%;">إغلاق</button>
     </div>
 </div>
 
 <footer id="footer">
-    <div class="footer-col">
-        <h3>VOID SWIFT</h3>
-        <p style="font-size:12px; color:#888;">أفضل متجر يقدم لك ألعاباً وبرمجيات بأسعار أسطورية! المنافسون كثر، لكننا دائماً الأفضل 😎.</p>
+    <div>
+        <h3 style="color:var(--pink);">SWIFT SAUDI</h3>
+        <p style="font-size:12px; color:#888;">متجرك الأول لكل ما هو جديد وحصري في عالم البرمجيات والألعاب.</p>
     </div>
-    <div class="footer-col">
-        <h3>روابط تهمك</h3>
-        <a href="#" onclick="alert('سياسة الاستبدال: يتم الاستبدال في حال تعطل المنتج فقط خلال 24 ساعة.')">سياسة الاستبدال</a>
-        <a href="#" onclick="alert('سياسة الخصوصية: بياناتك محمية ومشفرة ولا يتم مشاركتها.')">سياسة الخصوصية</a>
+    <div>
+        <h3>روابط سريعة</h3>
+        <a href="#" onclick="nav('privacy-policy')">سياسة الخصوصية</a>
+        <a href="#" onclick="nav('return-policy')">سياسة الاستبدال</a>
+        <a href="#" onclick="nav('faq')">الأسئلة الشائعة</a>
     </div>
-    <div class="footer-col">
-        <h3>الدعم الفني</h3>
-        <p style="font-size:14px;">الايميل: <span style="color:var(--pink);">swiftsa123a@gmail.com</span></p>
-        <div style="margin-top:15px; font-size:20px;">📸 🎥 🎵</div>
-    </div>
-    <div style="grid-column: 1/-1; text-align:center; border-top:1px solid #222; padding-top:20px;">
-        <img src="https://vision2030.gov.sa/sites/default/files/Vision%202030%20Logo.png" alt="2030" style="height:40px; opacity:0.5;">
-        <p style="font-size:12px; margin-top:10px;">الحقوق محفوظة لـ VOID | 2026</p>
+    <div>
+        <h3>تواصل معنا</h3>
+        <p style="font-size:13px;">الدعم: <span style="color:var(--pink);">swiftsa123a@gmail.com</span></p>
+        <p style="margin-top:10px;">📸 TikTok: @SwiftVoid</p>
     </div>
 </footer>
 
 <script>
-    // إعدادات Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCwVnf3CXX2d8W18NPATsqkLhmBabCgaB4",
         authDomain: "swiftvoid-3e5a6.firebaseapp.com",
-        databaseURL: "https://swiftvoid-3e5a6-default-rtdb.firebaseio.com",
         projectId: "swiftvoid-3e5a6",
         storageBucket: "swiftvoid-3e5a6.firebasestorage.app",
         messagingSenderId: "375536130124",
@@ -190,62 +163,53 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    function startStore() {
-        if(!document.getElementById('username').value) return alert("سجل اسمك يا بطل");
+    function startApp() {
+        if(!document.getElementById('username').value) return alert("سجل اسمك");
         document.getElementById('login').classList.remove('active');
         document.getElementById('home').classList.add('active');
         document.getElementById('header').style.display = 'flex';
         document.getElementById('footer').style.display = 'grid';
     }
 
+    function nav(id) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
     function openProduct(name) {
         document.getElementById('pName').innerText = name;
         document.getElementById('productModal').style.display = 'flex';
-        
-        // جلب التقييمات لايف
-        database.ref('reviews/' + name).on('value', (snapshot) => {
-            const data = snapshot.val();
+        database.ref('reviews/' + name).on('value', (snap) => {
+            const data = snap.val();
             const list = document.getElementById('reviewsList');
             list.innerHTML = data ? Object.values(data).reverse().map(r => `
-                <div class="review-item"><strong>${r.user}:</strong> ${r.text}</div>
-            `).join('') : "لا توجد تقييمات بعد.";
+                <div class="rev-item"><strong>${r.user}:</strong> ${r.text}</div>
+            `).join('') : "لا توجد تقييمات.. كن الأول!";
         });
     }
 
-    function postReview() {
+    function pushReview() {
         const text = document.getElementById('revText').value;
         const user = document.getElementById('username').value;
-        const name = document.getElementById('pName').innerText;
+        const pName = document.getElementById('pName').innerText;
         if(!text) return;
-        database.ref('reviews/' + name).push({ user, text });
+        database.ref('reviews/' + pName).push({ user, text });
         document.getElementById('revText').value = "";
     }
 
-    function openDownloadTerms() {
-        document.getElementById('productModal').style.display = 'none';
-        document.getElementById('termsModal').style.display = 'flex';
-    }
-
-    function toggleFaq(el) {
-        const ans = el.nextElementSibling;
-        ans.style.maxHeight = ans.style.maxHeight ? null : ans.scrollHeight + "px";
-    }
-
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    // خلفية النجوم
     const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
     let stars = [];
     function init() {
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         for(let i=0; i<150; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5, s:Math.random()*0.5});
     }
-    function animate() {
+    function draw() {
         ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white";
         stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y-=s.s; if(s.y<0) s.y=canvas.height; });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(draw);
     }
-    init(); animate();
+    init(); draw();
 </script>
 </body>
 </html>
