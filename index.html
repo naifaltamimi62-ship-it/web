@@ -18,14 +18,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         body { background: var(--bg); color: white; font-family: 'Tajawal', sans-serif; overflow-x: hidden; }
 
-        /* Cursor Customization */
         #cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--saudi-green); border-radius: 50%; pointer-events: none; z-index: 99999; transition: 0.1s; transform: translate(-50%, -50%); }
         #dot { position: fixed; width: 4px; height: 4px; background: white; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); }
 
-        /* Background Stars */
         #canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.6; }
 
-        /* Header */
         header {
             position: fixed; top: 0; width: 100%; padding: 20px 5%;
             display: flex; justify-content: space-between; align-items: center;
@@ -34,15 +31,12 @@
             display: none; animation: slideDown 0.8s ease;
         }
 
-        /* Navigation Buttons */
         .nav-link { color: white; text-decoration: none; font-weight: bold; margin: 0 15px; font-size: 14px; transition: 0.3s; }
         .nav-link:hover { color: var(--primary); text-shadow: var(--neon-shadow); }
 
-        /* Sections */
         section { display: none; padding: 120px 5% 50px; min-height: 100vh; flex-direction: column; align-items: center; }
         .active { display: flex; animation: zoomIn 0.5s ease forwards; }
 
-        /* Cards & Glassmorphism */
         .card {
             background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);
@@ -50,12 +44,9 @@
         }
         .card:hover { border-color: var(--saudi-green); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0, 169, 80, 0.2); }
 
-        /* Animations */
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(0, 242, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); } }
 
-        /* Buttons */
         .btn-swift {
             background: transparent; border: 1px solid var(--primary); color: var(--primary);
             padding: 12px 30px; border-radius: 8px; font-family: 'Orbitron'; font-weight: 900;
@@ -63,18 +54,15 @@
         }
         .btn-swift:hover { background: var(--primary); color: black; box-shadow: var(--neon-shadow); }
 
-        /* Form Styling */
-        input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.3); border: 1px solid #1e293b; color: white; border-radius: 10px; outline: none; }
+        input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.3); border: 1px solid #1e293b; color: white; border-radius: 10px; outline: none; text-align: right; }
         input:focus { border-color: var(--primary); }
 
-        /* Modals */
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000;
             display: none; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-box { background: var(--bg); border: 2px solid var(--saudi-green); padding: 40px; border-radius: 20px; max-width: 500px; text-align: center; }
 
-        /* Grid for Vault */
         .vault-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; }
     </style>
 </head>
@@ -134,7 +122,7 @@
     <div id="xenoModal" class="modal">
         <div class="modal-box">
             <h2 style="color:var(--saudi-green); margin-bottom:20px;">⚠️ تنبيه الأمان والاستخدام</h2>
-            <p style="line-height:1.8; margin-bottom:25px;">بتحميلك لـ Xeno، أنت توافق على أنه **يمنع البيع** أو **الاستغلال** أو استخدامه في إلحاق الضرر بالآخرين. الأداة مقدمة للتعلم والتطوير فقط.</p>
+            <p style="line-height:1.8; margin-bottom:25px;">بتحميلك لـ Xeno، أنت توافق على أنه **يمنع البيع** أو **الاستغلال** أو استخدامه في إلحاق الضرر بالآخرين.</p>
             <button onclick="startDownload()" class="btn-swift">أوافق، ابدأ التحميل</button>
             <button onclick="closeModal('xenoModal')" style="margin-top:10px; background:none; border:none; color:grey;">إلغاء</button>
         </div>
@@ -146,12 +134,13 @@
             <input type="text" id="sName" placeholder="اسم السكريبت">
             <input type="text" id="sLink" placeholder="رابط التحميل (Mediafire)">
             <button onclick="submitScript()" class="btn-swift">نشر الآن</button>
-            <button onclick="closeModal('uploadModal')" style="margin-top:10px; background:none; border:none; color:grey;">إغاء</button>
+            <button onclick="closeModal('uploadModal')" style="margin-top:10px; background:none; border:none; color:grey;">إلغاء</button>
         </div>
     </div>
 
     <script>
-        // Star Background Engine
+        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1491404391951892491/4lPHGz0spXcAiJoWvoQhm3wZq6cl8AgILKLsq8ItY58tOTxuUU0ytDKgN4mZ3qovCZvC";
+
         const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
         let stars = [];
         function init() {
@@ -168,14 +157,12 @@
         }
         init(); draw();
 
-        // Cursor Logic
         const cursor = document.getElementById('cursor'); const dot = document.getElementById('dot');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        // Navigation & Logic
         function nav(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -198,26 +185,51 @@
         function openUpload() { document.getElementById('uploadModal').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Script System
-        function submitScript() {
+        async function submitScript() {
             const name = document.getElementById('sName').value;
             const link = document.getElementById('sLink').value;
+            const author = document.getElementById('username').value;
+            
             if(!name || !link) return alert("اكمل البيانات");
             
-            let scripts = JSON.parse(localStorage.getItem('swift_scripts') || '[]');
-            scripts.unshift({ name, link, author: document.getElementById('username').value });
-            localStorage.setItem('swift_scripts', JSON.stringify(scripts));
-            
-            alert("تم النشر بنجاح!");
-            closeModal('uploadModal');
-            nav('vault');
+            // إرسال البيانات للديسكورد
+            const payload = {
+                username: "SWIFT SAUDI BOT",
+                embeds: [{
+                    title: "🚀 سكريبت جديد تم رفعه!",
+                    color: 43520, 
+                    fields: [
+                        { name: "اسم السكريبت", value: name, inline: true },
+                        { name: "المطور", value: author, inline: true },
+                        { name: "الرابط", value: link }
+                    ],
+                    footer: { text: "Swift Saudi System" },
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                await fetch(DISCORD_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                let scripts = JSON.parse(localStorage.getItem('swift_scripts') || '[]');
+                scripts.unshift({ name, link, author });
+                localStorage.setItem('swift_scripts', JSON.stringify(scripts));
+                
+                alert("تم النشر بنجاح ووصول الإشعار للديسكورد!");
+                closeModal('uploadModal');
+                nav('vault');
+            } catch (error) {
+                alert("حدث خطأ أثناء الإرسال للديسكورد.");
+            }
         }
 
         function renderScripts() {
             const list = document.getElementById('assetsList');
             const scripts = JSON.parse(localStorage.getItem('swift_scripts') || '[]');
-            
-            // سكريبت افتراضي
             const defaults = [{name: "Xeno Default", link: "#", author: "SYSTEM"}];
             const all = [...scripts, ...defaults];
 
