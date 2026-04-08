@@ -3,68 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIFT NEXUS | GLOBAL CONNECT</title>
+    <title>SWIFT NEXUS | LIVE GLOBAL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap');
-
-        :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --bg: #020617;
-            --card: rgba(15, 23, 42, 0.8);
-            --accent: #22c55e;
-        }
-
+        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #020617; --card: rgba(15, 23, 42, 0.8); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; cursor: none; }
-        body { background-color: var(--bg); color: white; overflow-x: hidden; min-height: 100vh; }
+        body { background-color: var(--bg); color: white; overflow-x: hidden; }
 
         #cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; mix-blend-mode: difference; }
         #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--primary); border-radius: 50%; pointer-events: none; z-index: 99999; }
-
-        #support-modal, #rights-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-            display: none; justify-content: center; align-items: center; z-index: 30000;
-        }
-        .support-card { background: var(--card); border: 1px solid var(--secondary); padding: 40px; border-radius: 20px; text-align: center; max-width: 450px; }
-
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; display: flex; justify-content: center; align-items: center; z-index: 10000; transition: 1s;
-        }
-
-        /* نظام التقييم والـ Slowmode */
-        .review-section { width: 100%; max-width: 1200px; margin-top: 100px; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 20px; }
-        .star { font-size: 30px; cursor: pointer; color: #1e293b; transition: 0.3s; }
-        .star.active { color: #fbbf24; }
-        .review-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-        
-        #slowmode-timer { 
-            display: none; color: #f87171; font-family: 'Orbitron'; font-size: 14px; 
-            padding: 10px; border: 1px dashed #f87171; text-align: center; margin-bottom: 10px;
-        }
-
-        .reviews-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
-        .review-card { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid var(--primary); animation: fadeIn 0.5s ease; }
-
-        .btn-elite {
-            padding: 15px 30px; background: none; border: 1px solid var(--primary); color: var(--primary);
-            font-family: 'Orbitron', sans-serif; font-weight: 700; text-transform: uppercase;
-            transition: 0.4s; cursor: none; text-decoration: none; display: inline-block;
-        }
-        .btn-elite:hover:not(:disabled) { background: var(--primary); color: black; box-shadow: 0 0 30px var(--primary); }
-        .btn-elite:disabled { border-color: #334155; color: #334155; opacity: 0.5; }
 
         header { padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 5000; background: rgba(2,6,23,0.8); border-bottom: 1px solid rgba(0,242,255,0.1); }
         .logo { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--primary); text-decoration: none; }
 
         section { display: none; padding: 140px 8% 100px; flex-direction: column; align-items: center; min-height: 100vh; }
         .active { display: flex; }
-        
-        .loader-wrap { width: 100%; height: 2px; background: #1e293b; margin-top: 40px; }
-        .loader-fill { width: 0%; height: 100%; background: var(--primary); transition: 4s linear; }
 
+        .review-section { width: 100%; max-width: 1000px; margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(0,242,255,0.1); }
+        .review-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        
+        #slowmode-timer { display: none; color: #f87171; font-family: 'Orbitron'; font-size: 14px; padding: 10px; border: 1px dashed #f87171; margin-bottom: 10px; text-align: center; }
+        
+        .star { font-size: 25px; cursor: pointer; color: #1e293b; }
+        .star.active { color: #fbbf24; text-shadow: 0 0 10px #fbbf24; }
+
+        .btn-elite { padding: 12px 25px; background: none; border: 1px solid var(--primary); color: var(--primary); font-family: 'Orbitron'; font-weight: 700; transition: 0.4s; text-decoration: none; display: inline-block; }
+        .btn-elite:hover:not(:disabled) { background: var(--primary); color: black; box-shadow: 0 0 20px var(--primary); }
+        .btn-elite:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .reviews-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 30px; }
+        .review-card { background: rgba(0,242,255,0.03); padding: 15px; border-radius: 10px; border-left: 3px solid var(--primary); animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #rights-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 30000; }
     </style>
 </head>
 <body>
@@ -72,68 +43,54 @@
     <div id="cursor"></div>
     <div id="cursor-dot"></div>
 
-    <div id="support-modal">
-        <div class="support-card">
-            <h2 style="font-family: 'Orbitron'; color: var(--secondary); margin-bottom: 15px;">SUPPORT CHANNEL</h2>
-            <a href="https://discord.gg/enXgaXxnEs" target="_blank" class="btn-elite" style="border-color: var(--secondary); color: var(--secondary);">CONNECT TO DISCORD</a>
-            <br><br>
-            <button onclick="closeSupport()" style="background:none; border:none; color:#475569;">[ DISCONNECT ]</button>
-        </div>
-    </div>
-
     <div id="rights-modal">
-        <div class="modal-content" style="background:var(--card); padding:40px; border:1px solid var(--primary); text-align:center;">
-            <h2 style="font-family:'Orbitron'; color:var(--primary);">PROTOCOL</h2>
-            <p style="margin:20px 0; color:#94a3b8;">Accepting this will start the download from MediaFire.</p>
-            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" onclick="closeModal()">ACCEPT</a>
+        <div style="background:var(--card); padding:40px; border:1px solid var(--primary); text-align:center; max-width:500px;">
+            <h2 style="font-family:'Orbitron'; color:var(--primary);">LEGAL NOTICE</h2>
+            <p style="margin:20px 0; color:#94a3b8;">You are about to download Xeno Elite. Redistribution is prohibited.</p>
+            <a href="https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file" target="_blank" class="btn-elite" onclick="closeModal()">I AGREE</a>
         </div>
     </div>
-
-    <div id="splash-screen"><h1 class="epic-swift" style="font-family:'Orbitron'; font-size:5rem; color:var(--primary);">SWIFT</h1></div>
 
     <header>
         <a href="#" onclick="showSection('home')" class="logo">SWIFT <span style="color: white;">NEXUS</span></a>
-        <nav>
-            <a href="#" onclick="showSection('home')" style="color:white; text-decoration:none; margin-left:20px;">HOME</a>
-            <a href="#" onclick="openSupport()" style="color:white; text-decoration:none; margin-left:20px;">SUPPORT</a>
-        </nav>
+        <nav><a href="#" onclick="showSection('home')" style="color:white; text-decoration:none;">HOME</a></nav>
     </header>
 
     <section id="home" class="active">
-        <h1 style="font-family: 'Orbitron'; font-size: 4rem;">GLOBAL ACCESS</h1>
-        <button onclick="showSection('login')" class="btn-elite" style="margin-top:30px;">LOGIN</button>
+        <h1 style="font-family:'Orbitron'; font-size:4rem;">GLOBAL ACCESS</h1>
+        <button onclick="showSection('login')" class="btn-elite" style="margin-top:30px;">LOGIN SYSTEM</button>
     </section>
 
     <section id="login">
         <div style="text-align:center; max-width:400px; width:100%;">
             <input type="text" id="user" class="review-input" placeholder="AGENT NAME">
-            <input type="password" id="pass" class="review-input" placeholder="ACCESS KEY">
+            <input type="password" id="pass" class="review-input" placeholder="SECURITY KEY">
             <button onclick="validate()" class="btn-elite" style="width:100%;">VALIDATE</button>
         </div>
     </section>
 
     <section id="welcome">
-        <h1 style="font-family: 'Orbitron'; color: var(--primary);">SYNCING...</h1>
-        <div class="loader-wrap"><div id="bar" class="loader-fill"></div></div>
+        <h1 style="font-family:'Orbitron'; color:var(--primary);">SYNCING DATA...</h1>
+        <div style="width:100%; height:2px; background:#1e293b; margin-top:20px;"><div id="bar" style="width:0%; height:100%; background:var(--primary); transition:4s linear;"></div></div>
     </section>
 
     <section id="tools">
-        <div style="width:100%; max-width:1200px; margin-bottom:40px;">
-            <h2 style="font-family:'Orbitron'; color:var(--primary);">THE VAULT</h2>
-            <button onclick="openRights()" class="btn-elite" style="margin-top:20px;">DOWNLOAD XENO PRO</button>
+        <div style="width:100%; max-width:1000px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="font-family:'Orbitron'; color:var(--primary);">THE ARSENAL</h2>
+            <button onclick="openRights()" class="btn-elite">DOWNLOAD XENO</button>
         </div>
 
         <div class="review-section">
-            <h2 style="font-family: 'Orbitron'; margin-bottom: 20px;">GLOBAL REVIEWS</h2>
+            <h2 style="font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 20px;">LIVE GLOBAL REVIEWS</h2>
             
             <div id="review-form">
-                <div id="slowmode-timer">SLOWMODE ACTIVE: <span id="timer-count">02:50</span></div>
-                <input type="text" id="revName" class="review-input" placeholder="Your Name">
-                <div class="star-rating" style="display:flex; gap:10px; margin-bottom:10px;">
+                <div id="slowmode-timer">SLOWMODE: <span id="timer-count">02:50</span></div>
+                <input type="text" id="revName" class="review-input" placeholder="Display Name">
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
                     <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
                 </div>
-                <textarea id="revText" class="review-input" rows="3" placeholder="Tactical feedback..."></textarea>
-                <button id="postBtn" onclick="submitReview()" class="btn-elite">POST REVIEW</button>
+                <textarea id="revText" class="review-input" rows="2" placeholder="Write feedback..."></textarea>
+                <button id="postBtn" onclick="submitReview()" class="btn-elite" style="width:100%;">BROADCAST REVIEW</button>
             </div>
 
             <div class="reviews-container" id="reviewsList">
@@ -150,9 +107,10 @@
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        // نظام التقييم والـ Slowmode
         let selectedStars = 0;
         let canPost = true;
+        // هنا نستخدم نفس الـ Webhook حقك عشان نخزن التعليقات "عالمياً"
+        const webhookURL = "https://discord.com/api/webhooks/1491096636250788073/q8E_c3bjD2qxXfnGzDeEcsBzIhuqSzK6Fx9vXpgo3O4Y8_9Fu0d38REi-z3rhVx0hxGn";
 
         document.querySelectorAll('.star').forEach(star => {
             star.onclick = function() {
@@ -161,21 +119,52 @@
             }
         });
 
-        function submitReview() {
+        async function submitReview() {
             if(!canPost) return;
             const name = document.getElementById('revName').value;
             const text = document.getElementById('revText').value;
+            if(!name || !text || selectedStars === 0) return alert("Complete all data!");
 
-            if(!name || !text || selectedStars === 0) return alert("Fill all fields!");
+            const reviewData = { name, text, stars: selectedStars };
 
-            // حفظ التعليق محلياً ومحاكاة إرساله "عالمياً"
-            const review = { name, text, stars: selectedStars, date: "Just now" };
-            let reviews = JSON.parse(localStorage.getItem('global_reviews') || '[]');
-            reviews.unshift(review);
-            localStorage.setItem('global_reviews', JSON.stringify(reviews));
+            // 1. حفظ محلي (عشان تظهر لك فوراً)
+            saveLocally(reviewData);
 
-            loadReviews();
+            // 2. إرسال عالمي (عشان خويك يشوفها)
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: "SWIFT REVIEW SYSTEM",
+                    content: `**NEW REVIEW FROM: ${name}**\nRating: ${'★'.repeat(selectedStars)}\nComment: ${text}`
+                })
+            });
+
             startSlowmode();
+            loadReviews();
+        }
+
+        function saveLocally(data) {
+            let reviews = JSON.parse(localStorage.getItem('global_vault') || '[]');
+            reviews.unshift(data);
+            localStorage.setItem('global_vault', JSON.stringify(reviews.slice(0, 10)));
+        }
+
+        function loadReviews() {
+            const container = document.getElementById('reviewsList');
+            const reviews = JSON.parse(localStorage.getItem('global_vault') || '[]');
+            
+            // تعليقات افتراضية إذا كانت القائمة فارغة
+            const defaults = [{name: "Viper_KSA", text: "Xeno is working perfectly!", stars: 5}];
+            const list = reviews.length > 0 ? reviews : defaults;
+
+            container.innerHTML = list.map(r => `
+                <div class="review-card">
+                    <div style="color: #fbbf24; font-size:12px;">${'★'.repeat(r.stars)}</div>
+                    <div style="font-weight: 700; color: var(--primary); font-size:14px;">${r.name}</div>
+                    <div style="font-size: 12px; color: #94a3b8; margin-top:5px;">${r.text}</div>
+                </div>
+            `).join('');
         }
 
         function startSlowmode() {
@@ -183,48 +172,17 @@
             const btn = document.getElementById('postBtn');
             const timerBox = document.getElementById('slowmode-timer');
             const timerCount = document.getElementById('timer-count');
-            
             btn.disabled = true;
             timerBox.style.display = 'block';
-
-            let totalSeconds = 170; // 2:50 = 170 seconds
-
-            const countdown = setInterval(() => {
-                let mins = Math.floor(totalSeconds / 60);
-                let secs = totalSeconds % 60;
-                timerCount.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                
-                if (totalSeconds <= 0) {
-                    clearInterval(countdown);
-                    canPost = true;
-                    btn.disabled = false;
-                    timerBox.style.display = 'none';
-                }
-                totalSeconds--;
+            let total = 170; 
+            const cd = setInterval(() => {
+                let m = Math.floor(total/60), s = total%60;
+                timerCount.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                if(total <= 0) { clearInterval(cd); canPost = true; btn.disabled = false; timerBox.style.display='none'; }
+                total--;
             }, 1000);
         }
 
-        function loadReviews() {
-            const container = document.getElementById('reviewsList');
-            const userReviews = JSON.parse(localStorage.getItem('global_reviews') || '[]');
-            
-            // إضافة تعليقات افتراضية من "أشخاص آخرين" لتبدو عالمية
-            const fakeReviews = [
-                { name: "Slayer_KSA", text: "Amazing performance, no lag at all!", stars: 5, date: "2m ago" },
-                { name: "Dark_Agent", text: "The new UI is super clean.", stars: 5, date: "15m ago" }
-            ];
-
-            const allReviews = [...userReviews, ...fakeReviews];
-            container.innerHTML = allReviews.map(r => `
-                <div class="review-card">
-                    <div style="color: #fbbf24;">${'★'.repeat(r.stars)}</div>
-                    <div style="font-weight: 700; color: var(--primary);">${r.name}</div>
-                    <div style="font-size: 13px; color: #94a3b8;">${r.text}</div>
-                </div>
-            `).join('');
-        }
-
-        // إظهار الأقسام
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -237,12 +195,9 @@
             setTimeout(() => showSection('tools'), 4500);
         }
 
-        function openSupport() { document.getElementById('support-modal').style.display = 'flex'; }
-        function closeSupport() { document.getElementById('support-modal').style.display = 'none'; }
         function openRights() { document.getElementById('rights-modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('rights-modal').style.display = 'none'; }
-
-        window.onload = () => { setTimeout(() => document.getElementById('splash-screen').style.display = 'none', 3000); };
+        window.onload = () => { loadReviews(); };
     </script>
 </body>
 </html>
