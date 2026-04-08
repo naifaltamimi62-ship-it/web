@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID SWIFT | Professional Store</title>
+    <title>SWIFT SAUDI | VOID STYLE V5</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -16,12 +16,17 @@
             --purple: #7b2cbf;
             --bg: #0f051d;
             --panel: #1a0b2e;
+            --saudi-green: #00843d;
         }
 
-        /* الماوس طبيعي وحر */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; cursor: auto !important; }
-        
-        body { background: var(--bg); color: white; overflow-x: hidden; scroll-behavior: smooth; }
+        /* حل مشكلة الماوس - إظهار المؤشر العادي إجبارياً */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Cairo', sans-serif; 
+            cursor: auto !important; 
+        }
+
+        body { background: var(--bg); color: white; overflow-x: hidden; }
         #canvas { position: fixed; inset: 0; z-index: -1; }
         
         /* الهيدر */
@@ -31,134 +36,197 @@
             background: rgba(15, 5, 29, 0.9); backdrop-filter: blur(10px); 
             z-index: 1000; border-bottom: 1px solid rgba(212, 42, 139, 0.2); 
         }
+        .logo { font-size: 24px; font-weight: 900; color: var(--pink); text-shadow: 0 0 15px var(--pink); }
 
+        /* الأقسام */
         section { display: none; padding: 120px 8% 50px; min-height: 100vh; flex-direction: column; align-items: center; }
-        .active { display: flex; animation: fadeIn 0.5s ease; }
+        .active { display: flex; animation: fadeIn 0.4s ease; }
 
-        /* الكروت والجمالية */
+        /* الكروت */
         .void-card { 
             background: var(--panel); border: 1px solid rgba(212, 42, 139, 0.2); 
             padding: 30px; border-radius: 20px; text-align: center; 
-            width: 100%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            width: 100%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: 0.3s;
         }
-        .void-card:hover { transform: translateY(-10px); border-color: var(--pink); }
+        .void-card:hover { transform: translateY(-5px); border-color: var(--pink); }
+
+        /* النبذات */
+        input { 
+            width: 100%; padding: 15px; margin-bottom: 15px; 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 42, 139, 0.3); 
+            color: white; border-radius: 10px; text-align: right; 
+        }
 
         .btn-void { 
             background: linear-gradient(90deg, var(--pink), var(--purple)); 
             color: white; border: none; padding: 12px 25px; border-radius: 12px; 
-            font-weight: 900; width: 100%; cursor: pointer !important; transition: 0.3s;
+            font-weight: 900; width: 100%; cursor: pointer !important; 
         }
-        .btn-void:hover { box-shadow: 0 0 20px var(--pink); }
 
-        /* الأسئلة الشائعة */
-        .faq-container { width: 100%; max-width: 800px; margin-top: 50px; }
-        .faq-item { background: var(--panel); margin-bottom: 15px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-        .faq-question { padding: 20px; cursor: pointer !important; display: flex; justify-content: space-between; font-weight: bold; }
-        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.3s ease; color: #ccc; }
+        /* نافذة المنتج والتقييمات */
+        .modal { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
+            z-index: 10000; display: none; justify-content: center; align-items: center; 
+            padding: 20px;
+        }
+        .modal-box { 
+            background: var(--panel); border: 2px solid var(--pink); 
+            padding: 30px; border-radius: 20px; max-width: 600px; width: 100%; 
+            max-height: 90vh; overflow-y: auto; text-align: right;
+        }
 
-        /* المودال (نافذة المنتج) */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: none; justify-content: center; align-items: center; }
-        .modal-box { background: var(--panel); border: 2px solid var(--pink); padding: 30px; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .review-card { 
+            background: rgba(255,255,255,0.03); padding: 12px; 
+            border-radius: 10px; margin-bottom: 10px; border-right: 4px solid var(--pink); 
+        }
 
-        input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 42, 139, 0.3); color: white; border-radius: 10px; text-align: right; }
-        .review-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-right: 4px solid var(--pink); }
+        /* الفوتر (تذييل الصفحة - نفس توزيع الصورة) */
+        footer {
+            background: #0a0414; padding: 50px 8%; display: none;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        footer h3 { color: var(--pink); margin-bottom: 15px; }
+        footer a { color: #ccc; text-decoration: none; display: block; margin-bottom: 8px; font-size: 14px; transition: 0.3s; }
+        footer a:hover { color: var(--pink); }
+        .payment-icons img { height: 25px; margin: 0 5px; filter: grayscale(100%) brightness(150%); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
+
     <canvas id="canvas"></canvas>
 
     <header id="header">
-        <div style="font-size: 24px; font-weight: 900; color: var(--pink);">VOID <span style="color:white">SWIFT</span></div>
-        <nav style="display:flex; gap:20px;">
-            <button onclick="nav('home')" style="background:none; border:none; color:white; font-weight:bold;">الرئيسية</button>
-            <button onclick="document.getElementById('faq-sec').scrollIntoView()" style="background:none; border:none; color:white; font-weight:bold;">الأسئلة</button>
-        </nav>
+        <div class="logo">VOID <span style="color:white">SWIFT</span></div>
     </header>
 
     <section id="login" class="active" style="justify-content:center;">
         <div class="void-card">
-            <h1 style="margin-bottom: 20px;">مرحباً بك في عالم VOID</h1>
-            <input type="text" id="username" placeholder="اسم العميل">
-            <button onclick="startApp()" class="btn-void">دخول للمتجر</button>
+            <h1>دخول المتجر</h1>
+            <input type="text" id="username" placeholder="اسمك المستعار">
+            <button onclick="startApp()" class="btn-void">دخول لايف</button>
         </div>
     </section>
 
     <section id="home">
-        <h1 style="margin-bottom: 40px; text-align: center;">منتجاتنا <span style="color:var(--pink)">الحصرية</span></h1>
+        <h1 style="margin-bottom: 40px; text-align: center;">نلعب بشغف.. <span style="color:var(--pink)">ونسعى للأفضل</span></h1>
         
         <div class="void-card">
-            <div style="font-size: 50px; margin-bottom: 10px;">📦</div>
-            <h2 style="color: var(--pink);">XENO EXECUTOR</h2>
-            <div style="color: #00ff00; font-weight: 900; margin: 10px 0; font-size: 20px;">0.00 ر.س</div>
-            <p style="color: grey; margin-bottom: 20px;">السكريبت الأقوى لتنفيذ الأوامر بأمان تام.</p>
-            <button onclick="openProduct('Xeno Executor', 'هذا الوصف الطويل لمنتج اكسينو المطور.. يتميز بكونه غير قابل للكشف تماماً، يدعم جميع النسخ، ويتم تحديثه تلقائياً لضمان أعلى مستويات الأمان والاستقرار لمستخدمي سويفت السعودية.', 'https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file')" class="btn-void">تفاصيل المنتج والتقييمات</button>
-        </div>
-
-        <div class="faq-container" id="faq-sec">
-            <h2 style="text-align: center; margin-bottom: 30px; color: var(--pink);">الأسئلة الشائعة</h2>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">ليش انتم الأفضل؟ <span>+</span></div>
-                <div class="faq-answer"><p style="padding-bottom:15px;">لأننا نقدم حماية حقيقية ودعم فني متواصل على مدار الساعة لضمان تجربة مثالية.</p></div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">ليش الأسعار مخفضة كذا؟ <span>+</span></div>
-                <div class="faq-answer"><p style="padding-bottom:15px;">هدفنا هو توفير أفضل الأدوات للجميع بأسعار تنافسية تناسب المجتمع السعودي.</p></div>
-            </div>
+            <h2 style="color: var(--pink); margin-bottom: 10px;">XENO EXECUTOR</h2>
+            <div style="font-size:12px; color:#888;">منوفر ✅</div>
+            <p style="color: #ccc; margin: 15px 0;">الأداة رقم #1 في الشرق الأوسط للحماية والتشفير.</p>
+            <button onclick="openProduct('Xeno Executor')" class="btn-void">عرض التقييمات (Live)</button>
         </div>
     </section>
 
     <div id="productModal" class="modal">
         <div class="modal-box">
-            <h2 id="pName" style="color: var(--pink); border-bottom: 1px solid #333; padding-bottom: 10px;"></h2>
-            <p id="pDesc" style="margin: 20px 0; line-height: 1.8; color: #eee; text-align: justify;"></p>
+            <h2 id="pName" style="color: var(--pink);"></h2>
+            <div style="font-size:22px; margin:10px 0;">السعر: <span style="color:#00ff00;">0.00 ر.س</span></div>
+            <p id="pDesc" style="color:#ccc; margin-bottom:20px;">سكريبت Xeno المطور: حماية كاملة، نظام تخطي bypass عالي، أداء مستقر 100% بدون لاق.</p>
             
-            <button id="downloadBtn" onclick="" class="btn-void" style="margin-bottom: 30px;">تحميل السكريبت الآن</button>
+            <button onclick="alert('جاري التحميل...')" class="btn-void">تحميل المنتج</button>
 
-            <h3 style="margin-bottom: 15px;">تقييمات العملاء ⭐</h3>
-            <div id="reviewsList" style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
-            
-            <input type="text" id="revText" placeholder="اكتب تجربتك هنا..">
-            <button onclick="pushReview()" class="btn-void">نشر التقييم</button>
-            <button onclick="closeModal()" style="margin-top: 15px; color: grey; background: none; border: none; width: 100%;">رجوع</button>
+            <div style="margin-top:40px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                <h3>تقييمات العملاء المباشرة ⭐</h3>
+                <div id="reviewsList" style="margin:20px 0; max-height:200px; overflow-y:auto; text-align:right;">
+                    </div>
+                <input type="text" id="revText" placeholder="اكتب تقييمك هنا للجميع...">
+                <button onclick="pushReview()" class="btn-void">نشر التقييم عالمياً</button>
+            </div>
+            <button onclick="closeModal('productModal')" style="margin-top:15px; color:grey; background:none; border:none; width:100%; cursor:pointer;">إغلاق</button>
         </div>
     </div>
 
+    <div id="policyModal" class="modal">
+        <div class="modal-box" style="max-width: 700px; text-align: justify; line-height: 2;">
+            <h2 style="color:var(--pink); margin-bottom:20px;">سياسة الخصوصية</h2>
+            <p>1. نحن في سويفت نحترم خصوصيتك ولا نشارك بياناتك مع أي طرف ثالث.</p>
+            <p>2. يتم جمع اسمك المستعار فقط لعرضه في قسم التقييمات، ولا نجمع أي بيانات حساسة.</p>
+            <p>3. استخدام أدواتنا هو على مسؤوليتك الشخصية، ونحن غير مسؤولين عن أي سوء استخدام.</p>
+            <p>4. نحتفظ بالحق في تعديل هذه السياسة في أي وقت لتتوافق مع معايير الأمان الجديدة.</p>
+            <p>5. للاستفسارات، يرجى التواصل معنا عبر ايميل الدعم الفني الموجود في الفوتر.</p>
+            <button onclick="closeModal('policyModal')" class="btn-void" style="margin-top:20px;">فهمت</button>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div>
+            <h3>كن أول من يعرف!</h3>
+            <p style="font-size:12px; color:#aaa; margin-bottom:15px;">اشترك بنشرتنا البريدية ليصلك كل جديد.</p>
+            <div style="display:flex; gap:10px;">
+                <input type="email" placeholder="ادخل البريد الإلكتروني" style="margin-bottom:0; font-size:12px; text-align:center;">
+                <button class="btn-void" style="width:auto; padding:0 20px; font-size:12px;">اشترك</button>
+            </div>
+            <div style="margin-top:20px; font-size:20px;">
+                <a href="#" style="display:inline; margin: 0 10px;">📷</a>
+                <a href="#" style="display:inline; margin: 0 10px;">♪</a>
+                <a href="#" style="display:inline; margin: 0 10px;">🎥</a>
+            </div>
+        </div>
+        <div>
+            <h3>روابط تهمك</h3>
+            <a href="#" onclick="openModal('policyModal')">سياسة الخصوصية</a>
+            <a href="#">سياسة الاستبدال والاسترجاع</a>
+            <a href="#">الأسئلة الشائعة</a>
+        </div>
+        <div>
+            <h3>خدمة العملاء</h3>
+            <p style="font-size:14px; color:#ccc;">الايميل: <a href="mailto:swiftsa123a@gmail.com" style="display:inline; color:#00ff00;">swiftsa123a@gmail.com</a></p>
+            <a href="#">واتساب</a>
+        </div>
+        <div style="text-align:center; position:relative;">
+            <div class="logo">VOID SWIFT</div>
+            <p style="font-size:12px; color:#888; margin-top:10px;">الحقوق محفوظة | 2026</p>
+            <img src="https://vision2030.gov.sa/sites/default/files/Vision%202030%20Logo.png" alt="Vision 2030" style="height:40px; margin-top:20px; opacity:0.6;">
+        </div>
+        <div class="payment-icons" style="grid-column: 1 / -1; text-align:center; border-top: 1px solid rgba(255,255,255,0.05); padding-top:20px; margin-top:20px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mada_Logo.svg/1024px-Mada_Logo.svg.png" alt="mada">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1000px-Mastercard-logo.svg.png" alt="mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1000px-Visa_Inc._logo.svg.png" alt="visa">
+            <img src="https://raw.githubusercontent.com/stc-pay/brand-guidelines/main/assets/stc-pay-logo.png" alt="stc pay">
+        </div>
+    </footer>
+
     <script>
-        // إعدادات Firebase من صورتك
+        // --- إعدادات Firebase الخاصة بك (مستخرجة من الصورة) ---
         const firebaseConfig = {
             apiKey: "AIzaSyCwVnf3CXX2d8W18NPATsqkLhmBabCgaB4",
             authDomain: "swiftvoid-3e5a6.firebaseapp.com",
             projectId: "swiftvoid-3e5a6",
             storageBucket: "swiftvoid-3e5a6.firebasestorage.app",
             messagingSenderId: "375536130124",
-            appId: "1:375536130124:web:a4ff59516a8b66da2fce9"
+            appId: "1:375536130124:web:a4ff59516a8b66da2fce9",
+            measurementId: "G-H78SQC4CHX"
         };
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         function startApp() {
-            if(!document.getElementById('username').value) return alert("سجل اسمك يا وحش");
+            if(!document.getElementById('username').value) return alert("ادخل اسمك");
             document.getElementById('header').style.display = 'flex';
+            document.getElementById('footer').style.display = 'grid';
             nav('home');
         }
 
-        function openProduct(name, desc, link) {
+        function openProduct(name) {
             document.getElementById('pName').innerText = name;
-            document.getElementById('pDesc').innerText = desc;
-            document.getElementById('downloadBtn').onclick = () => window.open(link);
             document.getElementById('productModal').style.display = 'flex';
             
-            // جلب التقييمات لايف
-            database.ref('reviews/' + name).on('value', (snap) => {
-                const data = snap.val();
+            // جلب مباشر من قاعدة البيانات لضمان المزامنة
+            database.ref('reviews/' + name).on('value', (snapshot) => {
+                const data = snapshot.val();
                 const list = document.getElementById('reviewsList');
-                list.innerHTML = data ? Object.values(data).reverse().map(r => `
-                    <div class="review-item"><strong>${r.user}:</strong> ${r.text}</div>
-                `).join('') : "لا توجد تقييمات بعد.";
+                list.innerHTML = "";
+                if (data) {
+                    Object.values(data).reverse().forEach(r => {
+                        list.innerHTML += `<div class="review-item"><strong>${r.user}:</strong> ${r.text}</div>`;
+                    });
+                } else { list.innerHTML = "لا يوجد تقييمات بعد."; }
             });
         }
 
@@ -171,24 +239,20 @@
             document.getElementById('revText').value = "";
         }
 
-        function toggleFaq(el) {
-            const ans = el.nextElementSibling;
-            ans.style.maxHeight = ans.style.maxHeight ? null : ans.scrollHeight + "px";
-        }
-
-        function nav(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+        function nav(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         // خلفية النجوم المتحركة
         const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
         let stars = [];
         function initStars() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<100; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, s: Math.random()*0.3});
+            for(let i=0; i<150; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5, s:Math.random()*0.5});
         }
         function draw() {
             ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white";
-            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y -= s.s; if(s.y<0) s.y=canvas.height; });
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y-=s.s; if(s.y<0) s.y=canvas.height; });
             requestAnimationFrame(draw);
         }
         initStars(); draw();
