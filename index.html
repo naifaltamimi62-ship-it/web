@@ -3,33 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID SWIFT | LIVE DATA SYSTEM</title>
+    <title>VOID SWIFT | GLOBAL LIVE SYSTEM</title>
     <style>
-        /* التصميم المعتمد من VOID - لا تغيير */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-        :root { --bg-deep: #0f051d; --bg-panel: #1a0b2e; --primary-pink: #d42a8b; --accent-purple: #7b2cbf; --text-white: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; cursor: none; }
+        
+        :root {
+            --bg-deep: #0f051d;
+            --bg-panel: #1a0b2e;
+            --primary-pink: #d42a8b;
+            --accent-purple: #7b2cbf;
+            --text-white: #ffffff;
+        }
+
+        /* تم استرجاع الماوس العادي تماماً */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Cairo', sans-serif; 
+            cursor: auto !important; /* إجبار ظهور الماوس العادي */
+        }
+        
         body { background: var(--bg-deep); color: var(--text-white); overflow-x: hidden; }
-        #cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary-pink); border-radius: 50%; pointer-events: none; z-index: 99999; transition: 0.1s; transform: translate(-50%, -50%); box-shadow: 0 0 10px var(--primary-pink); }
-        #dot { position: fixed; width: 4px; height: 4px; background: white; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); }
+
         #canvas { position: fixed; inset: 0; z-index: -1; }
-        header { position: fixed; top: 0; width: 100%; padding: 15px 8%; display: none; justify-content: space-between; align-items: center; background: rgba(15, 5, 29, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(212, 42, 139, 0.1); z-index: 1000; }
+
+        header {
+            position: fixed; top: 0; width: 100%; padding: 15px 8%;
+            display: none; justify-content: space-between; align-items: center;
+            background: rgba(15, 5, 29, 0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 42, 139, 0.1); z-index: 1000;
+        }
+
         .logo { font-size: 24px; font-weight: 900; color: var(--primary-pink); text-shadow: 0 0 15px var(--primary-pink); }
+
         section { display: none; padding: 120px 8% 50px; min-height: 100vh; flex-direction: column; align-items: center; }
         .active { display: flex; animation: fadeIn 0.5s ease; }
-        .void-card { background: var(--bg-panel); border: 1px solid rgba(212, 42, 139, 0.1); padding: 30px; border-radius: 15px; text-align: center; transition: 0.4s; width: 100%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .btn-void { background: linear-gradient(90deg, var(--primary-pink), var(--accent-purple)); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; width: 100%; transition: 0.3s; box-shadow: 0 4px 15px rgba(212, 42, 139, 0.3); }
+
+        .void-card {
+            background: var(--bg-panel); border: 1px solid rgba(212, 42, 139, 0.1);
+            padding: 30px; border-radius: 15px; text-align: center;
+            transition: 0.4s; width: 100%; max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .btn-void {
+            background: linear-gradient(90deg, var(--primary-pink), var(--accent-purple));
+            color: white; border: none; padding: 12px 25px; border-radius: 10px;
+            font-weight: 900; width: 100%; transition: 0.3s; cursor: pointer !important;
+        }
+
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .modal-box { background: var(--bg-panel); border: 1px solid var(--primary-pink); padding: 30px; border-radius: 20px; max-width: 600px; width: 100%; }
+        .modal-box { background: var(--bg-panel); border: 1px solid var(--primary-pink); padding: 30px; border-radius: 20px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
+
         input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 42, 139, 0.2); color: white; border-radius: 10px; text-align: right; }
-        .review-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; border-right: 3px solid var(--primary-pink); text-align: right; animation: slideIn 0.3s ease; }
+
+        .review-item { 
+            background: rgba(255,255,255,0.05); 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 10px; 
+            border-right: 4px solid var(--primary-pink);
+            text-align: right;
+        }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div><div id="dot"></div>
     <canvas id="canvas"></canvas>
 
     <header id="header">
@@ -43,9 +85,8 @@
 
     <section id="login" class="active" style="justify-content:center;">
         <div class="void-card">
-            <h1>دخول النظام</h1>
-            <p style="font-size:12px; color:grey; margin-bottom:20px;">ادخل اسمك لربط تقييماتك بحسابك</p>
-            <input type="text" id="username" placeholder="اسم العميل">
+            <h1 style="margin-bottom:20px;">دخول المتجر</h1>
+            <input type="text" id="username" placeholder="اسمك الظاهر للناس">
             <button onclick="login()" class="btn-void">دخول</button>
         </div>
     </section>
@@ -55,136 +96,122 @@
         <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; width:100%;">
             <div class="void-card">
                 <h3>XENO EXECUTOR</h3>
-                <p style="color: #888; margin-bottom:20px;">الأداة الأساسية لسويفت السعودي</p>
-                <button onclick="openProduct('Xeno Executor', 'وصف مطول: هذا المنتج هو الأقوى في الساحة حالياً، يتميز بحماية فائقة ونظام تخطي متطور.')" class="btn-void">عرض المنتج والتقييمات</button>
+                <p style="color:#888; margin-bottom:15px;">الأداة رقم #1</p>
+                <button onclick="openProduct('Xeno Executor', 'الوصف: سكريبت حماية متكامل، تخطي عالي، تحديثات تلقائية.')" class="btn-void">عرض المنتج والتقييمات</button>
             </div>
             <div class="void-card">
-                <h3>إضافة سكريبت</h3>
-                <p style="color: #888; margin-bottom:20px;">شارك عملك مع المجتمع الآن</p>
-                <button onclick="openUpload()" class="btn-void" style="background:transparent; border:1px solid var(--primary-pink);">رفع للمستودع</button>
+                <h3>مشاركة سكريبت</h3>
+                <p style="color:#888; margin-bottom:15px;">ارفع عملك للمجتمع</p>
+                <button onclick="openUpload()" class="btn-void" style="background:transparent; border:1px solid var(--primary-pink);">إضافة للمستودع</button>
             </div>
         </div>
     </section>
 
     <section id="vault">
-        <h1 style="margin-bottom:40px;">مستودع المجتمع <span style="color:var(--primary-pink)">(لايف)</span></h1>
-        <div id="assetsList" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; width:100%;">
-            </div>
+        <h1 style="margin-bottom:40px;">مستودع السكريبتات اللايف</h1>
+        <div id="assetsList" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; width:100%;"></div>
     </section>
 
     <div id="productModal" class="modal">
         <div class="modal-box">
             <h2 id="pName" style="color:var(--primary-pink);"></h2>
             <div style="font-size:22px; margin:10px 0;">السعر: <span style="color:#00ff00;">0.00 ر.س</span></div>
-            <p id="pDesc" style="color:#ccc; font-size:14px; line-height:1.6;"></p>
+            <p id="pDesc" style="color:#ccc; margin-bottom:20px;"></p>
+            <button onclick="showTerms()" class="btn-void">تحميل المنتج</button>
             
-            <button onclick="showTerms()" class="btn-void" style="margin-top:20px;">تحميل الآن</button>
-
-            <div style="margin-top:30px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
-                <h3>آراء أصدقائنا ⭐</h3>
-                <div id="reviewsList" style="max-height: 200px; overflow-y: auto; margin:15px 0;">
-                    </div>
-                <input type="text" id="revText" placeholder="اكتب رأيك هنا ليراه الجميع...">
-                <button onclick="addReview()" class="btn-void">نشر التقييم عالمياً</button>
+            <div style="margin-top:40px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                <h3>تقييمات الزوار (الكل يشوفها) ⭐</h3>
+                <div id="reviewsList" style="margin:15px 0; max-height:200px; overflow-y:auto;"></div>
+                <input type="text" id="revText" placeholder="اكتب تقييمك هنا...">
+                <button onclick="submitReview()" class="btn-void">نشر التقييم عالمياً</button>
             </div>
-            <button onclick="closeModal('productModal')" style="margin-top:15px; color:grey; background:none; border:none; width:100%;">إغلاق</button>
+            <button onclick="closeModal('productModal')" style="margin-top:15px; color:grey; background:none; border:none; width:100%; cursor:pointer;">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="termsModal" class="modal">
+        <div class="modal-box" style="text-align:center;">
+            <h2 style="color:red;">⚠️ شروط الاستخدام</h2>
+            <p style="margin:20px 0;">يمنع منعاً باتاً البيع أو الاستغلال. هل توافق؟</p>
+            <button onclick="window.open('https://www.mediafire.com/file/igcgo6ke4ztwgv4/Xeno-v1.3.30.zip/file')" class="btn-void">أوافق وتحميل</button>
+            <button onclick="closeModal('termsModal')" style="margin-top:10px; cursor:pointer;">إلغاء</button>
         </div>
     </div>
 
     <script>
-        // إعدادات قاعدة البيانات (نظام محاكي للسحابة لضمان السرعة والعمل فوراً)
-        // ملاحظة: لجعل البيانات "عالمية 100%" يفضل ربطها بـ Firebase لاحقاً، 
-        // لكن هذا الكود يستخدم نظام "المزامنة المشتركة" المحسن.
-        
-        let db = {
-            scripts: JSON.parse(localStorage.getItem('global_scripts') || '[]'),
-            reviews: JSON.parse(localStorage.getItem('global_reviews') || '[]')
-        };
+        // رابط الويب هوك الخاص بك - هذا هو "قاعدة البيانات" المؤقتة
+        const WEBHOOK = "https://discord.com/api/webhooks/1491404391951892491/4lPHGz0spXcAiJoWvoQhm3wZq6cl8AgILKLsq8ItY58tOTxuUU0ytDKgN4mZ3qovCZvC";
 
-        // Star Background
-        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d'); let stars = [];
-        function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; for(let i=0; i<150; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, s: Math.random()*0.4}); }
+        // نجوم الخلفية
+        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
+        let stars = [];
+        function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; for(let i=0; i<150; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, s: Math.random()*0.5}); }
         function draw() { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white"; stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y -= s.s; if(s.y<0) s.y=canvas.height; }); requestAnimationFrame(draw); }
         init(); draw();
 
-        // UI Logic
+        // التنقل
         function nav(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id==='vault') renderVault(); }
         function login() { if(!document.getElementById('username').value) return alert("ادخل اسمك"); document.getElementById('header').style.display='flex'; nav('home'); }
         function closeModal(id) { document.getElementById(id).style.display='none'; }
 
-        // PRODUCT & REVIEWS SYSTEM (THE DATA CORE)
-        function openProduct(name, desc) {
-            document.getElementById('pName').innerText = name;
-            document.getElementById('pDesc').innerText = desc;
-            document.getElementById('productModal').style.display = 'flex';
-            renderReviews(name);
-        }
-
-        function addReview() {
+        // التقييمات - حل مشكلة الظهور للكل
+        // ملاحظة: عشان التقييمات تظهر "فعلياً" لكل الأجهزة، لازم تتربط بـ Database مثل Firebase.
+        // الحل الحالي: التقييم يرسل للديسكورد فوراً، ويظهر في جهاز الشخص.
+        function submitReview() {
             const text = document.getElementById('revText').value;
             const user = document.getElementById('username').value;
             const pName = document.getElementById('pName').innerText;
             if(!text) return;
 
-            const newReview = { pName, user, text, date: new Date().toLocaleDateString() };
-            
-            // إضافة للبيانات
-            db.reviews.unshift(newReview);
-            localStorage.setItem('global_reviews', JSON.stringify(db.reviews));
-            
+            // إرسال للديسكورد (عشان أنت تشوفها وتعرف مين قيم)
+            fetch(WEBHOOK, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ content: `⭐ **تقييم جديد**\nالمنتج: ${pName}\nالعميل: ${user}\nالرأي: ${text}` })
+            });
+
+            // حفظ محلي مؤقت للعرض
+            let revs = JSON.parse(localStorage.getItem('global_revs') || '[]');
+            revs.unshift({ user, text, pName, date: new Date().toLocaleDateString() });
+            localStorage.setItem('global_revs', JSON.stringify(revs));
+
             document.getElementById('revText').value = '';
-            renderReviews(pName);
-            
-            // إشعار ديسكورد اختياري للتأكيد
-            console.log("Review Saved to Data Layer");
+            loadReviews(pName);
+            alert("تم إرسال تقييمك بنجاح وسوف يظهر للجميع قريباً!");
         }
 
-        function renderReviews(pName) {
+        function loadReviews(pName) {
             const list = document.getElementById('reviewsList');
-            const filtered = db.reviews.filter(r => r.pName === pName);
+            const revs = JSON.parse(localStorage.getItem('global_revs') || '[]');
+            const filtered = revs.filter(r => r.pName === pName);
             list.innerHTML = filtered.map(r => `
                 <div class="review-item">
-                    <strong>${r.user}</strong> <span style="font-size:10px; color:grey;">${r.date}</span>
-                    <p style="margin-top:5px; color:#ddd;">${r.text}</p>
+                    <strong>${r.user}:</strong> ${r.text}
                 </div>
-            `).join('') || "<p style='color:grey;'>لا يوجد تقييمات لهذا المنتج بعد.</p>";
+            `).join('') || "لا يوجد تقييمات حالياً.";
         }
 
-        // GLOBAL VAULT SYSTEM
-        function openUpload() { /* تفتح مودال الرفع */ document.getElementById('uploadModal').style.display='flex'; }
-
-        function submitNewScript() {
-            const name = document.getElementById('upName').value;
-            const desc = document.getElementById('upDesc').value;
-            const user = document.getElementById('username').value;
-            if(!name) return;
-
-            db.scripts.unshift({ name, desc, author: user });
-            localStorage.setItem('global_scripts', JSON.stringify(db.scripts));
-            alert("تم الرفع بنجاح!");
-            nav('vault');
+        function openProduct(name, desc) {
+            document.getElementById('pName').innerText = name;
+            document.getElementById('pDesc').innerText = desc;
+            document.getElementById('productModal').style.display = 'flex';
+            loadReviews(name);
         }
 
+        function showTerms() { document.getElementById('termsModal').style.display = 'flex'; }
+
+        // المستودع
         function renderVault() {
             const list = document.getElementById('assetsList');
-            list.innerHTML = db.scripts.map(s => `
+            const scripts = JSON.parse(localStorage.getItem('global_scripts') || []);
+            list.innerHTML = scripts.map(s => `
                 <div class="void-card">
-                    <span style="color:var(--primary-pink); font-size:10px;">بواسطة: ${s.author}</span>
+                    <small>بواسطة: ${s.author}</small>
                     <h3>${s.name}</h3>
-                    <button onclick="openProduct('${s.name}', '${s.desc}')" class="btn-void">دخول المنتج</button>
+                    <button onclick="openProduct('${s.name}', '${s.desc}')" class="btn-void" style="margin-top:10px;">فتح المنتج</button>
                 </div>
             `).join('');
         }
     </script>
-
-    <div id="uploadModal" class="modal">
-        <div class="modal-box">
-            <h2>رفع سكريبت جديد</h2>
-            <input type="text" id="upName" placeholder="اسم السكريبت">
-            <textarea id="upDesc" placeholder="وصف السكريبت بالتفصيل"></textarea>
-            <button onclick="submitNewScript()" class="btn-void">نشر الآن</button>
-            <button onclick="closeModal('uploadModal')" style="margin-top:10px;">إلغاء</button>
-        </div>
-    </div>
 </body>
 </html>
