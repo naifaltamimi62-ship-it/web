@@ -18,6 +18,53 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg); color: white; overflow-x: hidden; height: 100vh; }
 
+        /* --- شاشة الترحيب الاحترافية (جديد) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .welcome-msg {
+            color: #4b5563;
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInOut 2.5s ease-in-out forwards;
+        }
+
+        .epic-swift {
+            font-size: 6rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 15px;
+            opacity: 0;
+            transform: scale(0.3);
+            filter: blur(20px);
+            animation: swiftFlash 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2.5s forwards;
+            text-shadow: 0 0 20px var(--primary), 0 0 50px var(--primary);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        @keyframes swiftFlash {
+            0% { opacity: 0; transform: scale(0.3); filter: blur(20px); }
+            70% { opacity: 1; transform: scale(1.1); filter: blur(0); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 10px; }
+        }
+
+        .hide-splash { opacity: 0 !important; pointer-events: none; }
+        /* ---------------------------------- */
+
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #111827 0%, #030712 100%); }
 
         header {
@@ -63,6 +110,11 @@
     </style>
 </head>
 <body>
+
+    <div id="splash-screen">
+        <div class="welcome-msg">INITIALIZING NEXUS SYSTEM...</div>
+        <div class="epic-swift">SWIFT</div>
+    </div>
 
     <canvas id="bg-canvas"></canvas>
 
@@ -141,6 +193,14 @@
     </section>
 
     <script>
+        // --- سكريبت الترحيب (جديد) ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash-screen').classList.add('hide-splash');
+            }, 5500); // الشاشة تختفي بعد 5 ثواني ونص لضمان اكتمال الأنيميشن
+        });
+        // ---------------------------
+
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
