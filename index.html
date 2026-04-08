@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg); color: white; overflow-x: hidden; height: 100vh; }
 
-        /* --- شاشة الترحيب الاحترافية (جديد) --- */
+        /* --- شاشة الترحيب الاحترافية --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -161,7 +161,7 @@
 
     <section id="welcome">
         <div style="max-width: 500px;">
-            <h2 style="font-size: 3rem;">WELCOME, <span id="agent" style="color: var(--primary);">AGENT</span></h2>
+            <h2 style="font-size: 3rem;">WELCOME, <span id="agent" style="color: var(--primary);">SWIFT</span></h2>
             <p style="color: #94a3b8; margin-top: 10px;">SECURING SESSION & LOCKING DEVICE...</p>
             <div class="loader-wrap"><div id="bar" class="loader-fill"></div></div>
         </div>
@@ -193,13 +193,11 @@
     </section>
 
     <script>
-        // --- سكريبت الترحيب (جديد) ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('splash-screen').classList.add('hide-splash');
-            }, 5500); // الشاشة تختفي بعد 5 ثواني ونص لضمان اكتمال الأنيميشن
+            }, 5500);
         });
-        // ---------------------------
 
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -253,10 +251,11 @@
         }
 
         function loginSuccess(u) {
-            document.getElementById('agent').innerText = u.toUpperCase();
+            // تم تغيير السطر بالأسفل ليظهر اسم SWIFT بدلاً من اسم المستخدم
+            document.getElementById('agent').innerText = "SWIFT";
             show('welcome');
             document.getElementById('bar').style.width = "100%";
-            setTimeout(() => show('tools'), 3000);
+            setTimeout(() => show('tools'), 3500); // وقت التحميل قبل الدخول للأدوات
         }
 
         function showError(m) {
